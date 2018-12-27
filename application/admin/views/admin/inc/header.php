@@ -15,7 +15,7 @@
     <!-- end: Mobile Specific -->
 
     <!-- start: CSS -->
-    <link href="<?php echo site_url('public/admin/css/bootstrap.min.css')?>" rel="stylesheet"/>
+    <link href="<?php echo base_url('./public/admin/css/bootstrap.min.css')?>" rel="stylesheet"/>
     <link href="<?php echo base_url('./public/admin/css/bootstrap-responsive.min.css'); ?>" rel="stylesheet"/>
     <link href="<?php echo base_url('./public/admin/css/style.min.css'); ?>" rel="stylesheet"/>
     <link href="<?php echo base_url('./public/admin/css/style-responsive.min.css'); ?>" rel="stylesheet"/>
