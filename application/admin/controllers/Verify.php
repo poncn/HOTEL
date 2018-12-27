@@ -16,7 +16,7 @@ class Verify extends MY_Controller
     public function index()
     {
         $this->load->model('Request_model');
-        $requestString=$this->input->post('return_verify',true);
+        $requestString = $this->input->post('return_verify', true);
         $this->jsonOut($this->Request_model->verifyRequest($requestString));
     }
 

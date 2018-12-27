@@ -26,9 +26,11 @@ class MY_Model extends CI_Model
 
     /**
      * 新增项目
+     *
      * @param resource $db
-     * @param string $tableName
-     * @param array $set
+     * @param string   $tableName
+     * @param array    $set
+     *
      * @return bool
      */
     protected function add($db = null, $tableName = '', $set = [])
@@ -46,11 +48,12 @@ class MY_Model extends CI_Model
     /**
      * 获取单项
      *
-     * @param object $db 数据库连接资源
+     * @param object $db        数据库连接资源
      * @param string $tableName 操作表名
-     * @param string $select 字段限制
-     * @param array $where 获取的where条件，关联数组['字段名'=>'值'，...]
-     * @param array $like 获取的like条件[['字段名'，'匹配值','通配符位置',...],通配符位置可选before|after|both,默认both]
+     * @param string $select    字段限制
+     * @param array  $where     获取的where条件，关联数组['字段名'=>'值'，...]
+     * @param array  $like      获取的like条件[['字段名'，'匹配值','通配符位置',...],通配符位置可选before|after|both,默认both]
+     *
      * @return boolean|mixed
      */
     protected function get($db = null, $tableName = '', $select = '*', $where = [], $like = [])
@@ -92,6 +95,7 @@ class MY_Model extends CI_Model
 
     /**
      * 设置最近一次查询语句
+     *
      * @param string $sql
      */
     public function setLastQuery($sql = '')
@@ -101,18 +105,20 @@ class MY_Model extends CI_Model
 
     /**
      * 获取多项
-     * @param object $db 数据库连接资源
-     * @param string $tableName 操作表名
-     * @param string $select 字段限制
-     * @param array $where 获取的where,关联数组['字段名'=>'值'，...]
-     * @param array $whereIn 获取的whereIn条件，关联数组['字段名'=>'值1，值2，值3，...',...]
-     * @param array $whereNotIn 获取的whereNotIn条件，关联数组['字段名'=>'值1，值2，值3，...',...]
-     * @param array $like 获取的like条件,[['字段名','匹配值','通配符位置'],...],通配符位置可选before|after|both,默认both
-     * @param array $order 排列规则,['字段名'=>'排列规则',...],排列规则可选ASC|DESC
-     * @param int $limit 数量限制
-     * @param int $offset 偏移量
-     * @param bool $isOnlyReturnCountNum 是否仅返回数据数量
-     * @param bool $returnAsArray 默认以[对象1，对象2,...]形式返回结果，可设置本参数true[数组1，数组2，...]形式返回结果
+     *
+     * @param object $db                   数据库连接资源
+     * @param string $tableName            操作表名
+     * @param string $select               字段限制
+     * @param array  $where                获取的where,关联数组['字段名'=>'值'，...]
+     * @param array  $whereIn              获取的whereIn条件，关联数组['字段名'=>'值1，值2，值3，...',...]
+     * @param array  $whereNotIn           获取的whereNotIn条件，关联数组['字段名'=>'值1，值2，值3，...',...]
+     * @param array  $like                 获取的like条件,[['字段名','匹配值','通配符位置'],...],通配符位置可选before|after|both,默认both
+     * @param array  $order                排列规则,['字段名'=>'排列规则',...],排列规则可选ASC|DESC
+     * @param int    $limit                数量限制
+     * @param int    $offset               偏移量
+     * @param bool   $isOnlyReturnCountNum 是否仅返回数据数量
+     * @param bool   $returnAsArray        默认以[对象1，对象2,...]形式返回结果，可设置本参数true[数组1，数组2，...]形式返回结果
+     *
      * @return boolean|mixed
      */
     protected function gets($db = null, $tableName = '', $select = '*', $where = [], $whereIn = [], $whereNotIn = [], $like = [], $order = [], $limit = 0, $offset = 0, $isOnlyReturnCountNum = false, $returnAsArray = false)
@@ -189,10 +195,11 @@ class MY_Model extends CI_Model
      * 设置
      *
      * @param resource $db
-     * @param string $tableName
-     * @param array $where
-     * @param array $set
-     * @param int $limit
+     * @param string   $tableName
+     * @param array    $where
+     * @param array    $set
+     * @param int      $limit
+     *
      * @return bool
      */
     protected function set($db = null, $tableName = '', $where = [], $set = [], $limit = 1)
@@ -212,9 +219,10 @@ class MY_Model extends CI_Model
      * 移除
      *
      * @param resource $db
-     * @param string $tableName
-     * @param array $where
-     * @param int $limit
+     * @param string   $tableName
+     * @param array    $where
+     * @param int      $limit
+     *
      * @return bool
      */
     protected function delete($db = null, $tableName = '', $where = [], $limit = 1)
