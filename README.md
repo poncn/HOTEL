@@ -1,17 +1,18 @@
 # My_hotel
 使用codeigniter搭建的一个酒店管理系统
 
-#标题#
 
-##标题##
+# 标题 
 
-###标题###
+## 标题 
 
-####标题####
+### 标题 
 
-#####标题#####
+#### 标题 
 
-######标题######
+##### 标题 
+
+###### 标题 
 
 **加粗**
 
@@ -26,10 +27,10 @@
 
 ***
 
-![alt](https://www.baidu.com/s?wd=%E4%BB%8A%E6%97%A5%E6%96%B0%E9%B2%9C%E4%BA%8B&tn=SE_PclogoS_8whnvm25&sa=ire_dl_gh_logo&rsv_dl=igh_logo_pcs ''图片'')
+![alt](https://www.baidu.com/img/bd_logo1.png ''图片'')
 
 
-[百度](www.baidu.com "百度")
+[百度](https://www.baidu.com/ "百度")
 
 
 + 列表
