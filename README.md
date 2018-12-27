@@ -27,10 +27,10 @@
 
 ***
 
-![alt](https://github.com/qymon/My_hotel/blob/master/public/home/img/face/face_1.png ''图片'')
+![百度](https://github.com/qymon/My_hotel/blob/master/public/home/img/face/face_1.png)
 
 
-[百度](https://www.baidu.com/img/bd_logo1.png "百度")
+[百度](https://www.baidu.com/img/bd_logo1.png)
 
 
 + 列表
