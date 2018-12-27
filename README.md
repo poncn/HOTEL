@@ -27,7 +27,7 @@
 
 ***
 
-![alt](https://www.baidu.com/img/bd_logo1.png ''图片'')
+![alt](./public/home/img/face/face_1.png ''图片'')
 
 
 [百度](https://www.baidu.com/ "百度")
