@@ -372,9 +372,39 @@
                             <span class="label">6</span></a>
                         <ul>
                             <li>
-                                <a class="submenu" href="<?php echo base_url('Admin/table');?>">
+                                <a class="submenu" href="<?php echo site_url('Admin/table');?>">
                                     <i class="icon-table"></i>
                                     <span class="hidden-tablet"> Admin table</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('User/table');?>">
+                                    <i class="icon-table"></i>
+                                    <span class="hidden-tablet"> User table</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Book/table');?>">
+                                    <i class="icon-table"></i>
+                                    <span class="hidden-tablet"> Book table</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Type/table');?>">
+                                    <i class="icon-table"></i>
+                                    <span class="hidden-tablet"> Type table</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Comment/table');?>">
+                                    <i class="icon-table"></i>
+                                    <span class="hidden-tablet"> Comment table</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Room/table');?>">
+                                    <i class="icon-table"></i>
+                                    <span class="hidden-tablet"> Room table</span>
                                 </a>
                             </li>
                         </ul>
@@ -384,9 +414,39 @@
                             <span class="label">6</span></a>
                         <ul>
                             <li>
-                                <a class="submenu" href="<?php echo base_url('Admin/create');?>">
+                                <a class="submenu" href="<?php echo site_url('Admin/create');?>">
                                     <i class="icon-edit"></i>
                                     <span class="hidden-tablet"> Admin create</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('User/create');?>">
+                                    <i class="icon-edit"></i>
+                                    <span class="hidden-tablet"> User create</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Book/create');?>">
+                                    <i class="icon-edit"></i>
+                                    <span class="hidden-tablet"> Book create</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Type/create');?>">
+                                    <i class="icon-edit"></i>
+                                    <span class="hidden-tablet"> Type create</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Comment/create');?>">
+                                    <i class="icon-edit"></i>
+                                    <span class="hidden-tablet"> Comment create</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Room/create');?>">
+                                    <i class="icon-edit"></i>
+                                    <span class="hidden-tablet"> Room create</span>
                                 </a>
                             </li>
                         </ul>

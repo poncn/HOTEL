@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends MY_Controller
 {
+    private $adminTable='admin';
 
     public function __construct()
     {
@@ -48,7 +49,7 @@ class Login extends MY_Controller
 
         }
 
-        if ($this->Admin_model->verifyLogin($login['username'], $login['password'])) {
+        if ($this->Admin_model->verifyLogin($this->adminTable,$login['username'], $login['password'])) {
             $retData = [
                 'errorCode' => 0,
                 'redirectUrl' => site_url('Login/index')

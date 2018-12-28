@@ -20,7 +20,7 @@
                     <div class="control-group">
                         <label class="control-label" for="username">Username</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="username" type="text" name="username" maxlength="12"
+                            <input class="input-xlarge focused" id="username" type="text" name="username" maxlength="9"
                                    value="<?php if (isset($data)) {
                                        echo $data->username;
                                    } ?>">

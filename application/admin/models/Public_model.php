@@ -1,13 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin_model extends MY_Model
+class Public_model extends MY_Model
 {
     //用户名session标记项
     const USER_SESSION_SIGN = 'username';
     const USER_PASSWORD_SALT = 'this_is_my_hotel';
-
-    private $adminTable = 'admin';
 
     /**
      * 生成哈希密码字符串
@@ -17,7 +15,6 @@ class Admin_model extends MY_Model
      */
     public function createHashedPassword($username = '', $password = '')
     {
-
         return md5($password . $username . self::USER_PASSWORD_SALT);
     }
 
@@ -28,9 +25,9 @@ class Admin_model extends MY_Model
      * @param string $password
      * @return bool|mixed
      */
-    public function verifyLogin($username = '', $password = '')
+    public function verifyLogin($tableName='',$username = '', $password = '')
     {
-        if (($user = $this->getUser('username', [
+        if (($user = $this->getUser($tableName,'username', [
             'username' => $username,
             'password' => $this->createHashedPassword($username, $password)
         ]))) {
@@ -77,10 +74,10 @@ class Admin_model extends MY_Model
      *
      * @return bool
      */
-    public function getCurrentUser()
+    public function getCurrentUser($tableName='')
     {
         if (false != ($currentUsername = $this->getCurrentLogin())) {
-            return $this->getUserByUserName($currentUsername);
+            return $this->getUserByUserName($tableName,$currentUsername);
         }
         return false;
     }
@@ -93,9 +90,9 @@ class Admin_model extends MY_Model
      * @param array $like
      * @return bool|mixed
      */
-    public function getUser($select = '*', $where = [], $like = [])
+    public function getUser($tableName='',$select = '*', $where = [], $like = [])
     {
-        return parent::get($this->db, $this->adminTable, $select, $where, $like);
+        return parent::get($this->db, $tableName, $select, $where, $like);
     }
 
     /**
@@ -105,9 +102,9 @@ class Admin_model extends MY_Model
      * @param string $select
      * @return bool|mixed
      */
-    public function getUserByUserName($username = '', $select = '*')
+    public function getUserByUserName($tableName='',$username = '', $select = '*')
     {
-        return $this->getUser($select, [
+        return $this->getUser($tableName,$select, [
             'username' => trim($username)
         ]);
     }
@@ -119,9 +116,9 @@ class Admin_model extends MY_Model
      * @param string $select
      * @return bool|mixed
      */
-    public function getUserById($Id = 0, $select = '*')
+    public function getUserById($tableName='',$Id = 0, $select = '*')
     {
-        return $this->getUser($select, ['id' => (int)$Id]);
+        return $this->getUser($tableName,$select, ['id' => (int)$Id]);
     }
 
     /**
@@ -139,10 +136,10 @@ class Admin_model extends MY_Model
      * @param bool $returnAsArray
      * @return mixed|bool
      */
-    public function getUsers($select = '*', $where = [],
+    public function getUsers($tableName='',$select = '*', $where = [],
                              $whereIn = [], $whereNotIn = [], $like = [], $order = [], $limit = 0, $offset = 0, $isOnlyReturnCountNum = false, $returnAsArray = false)
     {
-        return parent::gets($this->db, $this->adminTable, $select, $where, $whereIn, $whereNotIn, $like, $order, $limit, $offset, $isOnlyReturnCountNum, $returnAsArray);
+        return parent::gets($this->db, $tableName, $select, $where, $whereIn, $whereNotIn, $like, $order, $limit, $offset, $isOnlyReturnCountNum, $returnAsArray);
     }
 
     /**
@@ -151,12 +148,12 @@ class Admin_model extends MY_Model
      * @param array $set
      * @return bool
      */
-    public function addUser($set = [])
+    public function addUser($tableName='',$set = [])
     {
         if (isset($set['password'])) {
             $set['password'] = $this->createHashedPassword($set['username'], $set['password']);
         }
-        return parent::add($this->db, $this->adminTable, $set);
+        return parent::add($this->db, $tableName, $set);
     }
 
     /**
@@ -166,9 +163,9 @@ class Admin_model extends MY_Model
      * @param string $password
      * @return bool
      */
-    public function addUserWithParams($username = '', $password = '')
+    public function addUserWithParams($tableName='',$username = '', $password = '')
     {
-        return $this->addUser([
+        return $this->addUser($tableName,[
             'username' => $username,
             'password' => $password
         ]);
@@ -182,17 +179,17 @@ class Admin_model extends MY_Model
      * @param int $limit
      * @return bool
      */
-    public function setUser($where = [], $set = [], $limit = 1)
+    public function setUser($tableName='',$where = [], $set = [], $limit = 1)
     {
         if(isset($set['password'])){
-            if(!($user=$this->getUser('username',$where))){
+            if(!($user=$this->getUser($tableName,'username',$where))){
                 return false;
             }
 
             $set['password']=$this->createHashedPassword($user->username,$set['password']);
 
         }
-        return parent::set($this->db,$this->adminTable,$where,$set,$limit);
+        return parent::set($this->db,$tableName,$where,$set,$limit);
     }
 
     /**
@@ -202,29 +199,29 @@ class Admin_model extends MY_Model
      * @param array $set
      * @return bool
      */
-    public function editUserByUserName($username='',$set=[])
+    public function editUserByUserName($tableName='',$username='',$set=[])
     {
         if(isset($set['username'])){
             unset($set['username']);
         }
 
-        return $this->setUser([
+        return $this->setUser($tableName,[
             'username'=>trim($username)
         ],$set);
     }
 
-    public function editUserByUserId($id=0,$set=[],$limit = 1){
+    public function editUserByUserId($tableName='',$id=0,$set=[],$limit = 1){
 
         if(isset($set['password'])){
-            if(!($this->getUserById($id))){
+            if(!($this->getUserById($tableName,$id))){
                 return false;
             }
 
             $set['password']=$this->createHashedPassword($set['username'],$set['password']);
 
         }
-         return $this->db->limit($limit)
-             ->replace($this->adminTable,$set);
+        return $this->db->limit($limit)
+            ->replace($tableName,$set);
     }
 
     /**
@@ -234,9 +231,9 @@ class Admin_model extends MY_Model
      * @param array $password
      * @return bool
      */
-    public function changeUserPassword($username='',$password='')
+    public function changeUserPassword($tableName='',$username='',$password='')
     {
-        return $this->editUserByUserName($username,[
+        return $this->editUserByUserName($tableName,$username,[
             'password'=>trim($password)
         ]);
     }
@@ -248,9 +245,9 @@ class Admin_model extends MY_Model
      * @param int $limit
      * @return mixed
      */
-    public function deleteUser($where=[],$limit=1)
+    public function deleteUser($tableName='',$where=[],$limit=1)
     {
-        return parent::delete($this->db,$this->adminTable,$where,$limit);
+        return parent::delete($this->db,$tableName,$where,$limit);
     }
 
     /**
@@ -259,9 +256,9 @@ class Admin_model extends MY_Model
      * @param int $userId
      * @return mixed
      */
-    public function deleteUserById($Id=0)
+    public function deleteUserById($tableName='',$Id=0)
     {
-        return $this->deleteUser(['id'=>(int)$Id]);
+        return $this->deleteUser($tableName,['id'=>(int)$Id]);
     }
 
 }

@@ -4,11 +4,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin extends MY_Controller
 {
 
+    private $adminTable='admin';
+
     public function __construct()
     {
         parent::__construct();
 
-        $this->load->Model('Admin_model');
+        $this->load->Model('Public_model');
         $this->load->Model('Request_model');
     }
 
@@ -19,7 +21,7 @@ class Admin extends MY_Controller
 
     public function table()
     {
-        $result = $this->Admin_model->getUsers();
+        $result = $this->Public_model->getUsers($this->adminTable);
 
         $this->loadView('admin/admin_table', [
             'data' => $result
@@ -28,7 +30,7 @@ class Admin extends MY_Controller
 
     public function create($username = '')
     {
-        if (!($data = $this->Admin_model->getUserByUserName($username))) {
+        if (!($data = $this->Public_model->getUserByUserName($this->adminTable,$username))) {
             $this->loadView('admin/admin_create');
         } else {
             $this->loadView('admin/admin_create', [
@@ -44,9 +46,13 @@ class Admin extends MY_Controller
             array(
                 'field' => 'username',
                 'label' => 'Username',
-                'rules' => 'required',
+                'rules' => 'required|regex_match[/[A-Za-z0-9]/]|is_unique[admin.username]|min_length[3]|max_length[9]',
                 'errors' => array(
                     'required' => '用户名为必填项',
+                    'regex_match' => '用户名必须是英文字母和数字',
+                    'is_unique' => '用户名已存在',
+                    'min_length' => '用户名最少由3个字母或数字组成',
+                    'max_length' => '用户名最多由9个字母或数字组成',
                 ),
             ),
             array(
@@ -102,42 +108,40 @@ class Admin extends MY_Controller
             'message' => '创建失败'
         ];
 
-        $config=$this->upFile();
+        $data = $this->input->post([
+            'username', 'password', 'rePassword'
+        ]);
+
+        $config = $this->upFile();
 
         if ($this->verify() !== true) {
             $alert['message'] = $this->verify();
         } else if (!($this->upload->do_upload('head_portrait'))) {
             $alert['message'] = $this->upload->display_errors('', '');
+        } else {
+
+            $path = $config['upload_path'] . $this->upload->data('file_name');
+
+            $result = $this->Public_model->addUser($this->adminTable,[
+                'username' => $data['username'],
+                'password' => $data['password'],
+                'head_portrait' => $path
+            ]);
+            if ($result) {
+                $alert = [
+                    'errorCode' => 1,
+                    'message' => '创建成功'
+                ];
+            } else {
+                $alert = [
+                    'errorCode' => 0,
+                    'message' => '创建失败'
+                ];
+            }
         }
-            var_dump($config);
-
-
-
-//        $path = $config['upload_path'] . $this->upload->data('file_name');
-
-////
-//        if ($alert['message']===true) {
-//            $result = $this->Admin_model->addUser([
-//                'username'=>$data['username'],
-//                'password'=>$data['password'],
-//                'head_portrait'=>$path
-//            ]);
-//            if ($result) {
-//                $alert = [
-//                    'errorCode' => 1,
-//                    'message' => '创建成功'
-//                ];
-//            } else {
-//                $alert = [
-//                    'errorCode' => 0,
-//                    'message' => '创建失败'
-//                ];
-//            }
-//        }
-//
-//        $this->loadView('admin/admin_create', [
-//            'alert' => $alert
-//        ]);
+        $this->loadView('admin/admin_create', [
+            'alert' => $alert
+        ]);
 
     }
 
@@ -152,16 +156,22 @@ class Admin extends MY_Controller
             'username', 'password', 'rePassword'
         ]);
 
-        $set = $this->input->post([
-            'username', 'password'
-        ]);
-        $set['id'] = $id;
+        $config = $this->upFile();
 
+        if ($this->verify() !== true) {
+            $alert['message'] = $this->verify();
+        } else if (!($this->upload->do_upload('head_portrait'))) {
+            $alert['message'] = $this->upload->display_errors('', '');
+        } else {
 
-        $alert['message'] = $this->verify($data);
+            $path = $config['upload_path'] . $this->upload->data('file_name');
 
-        if ($alert['message']) {
-            $result = $this->Admin_model->editUserByUserId($id, $set);
+            $result = $this->Public_model->editUserByUserId($this->adminTable,$id, [
+                'id' => $id,
+                'username' => $data['username'],
+                'password' => $data['password'],
+                'head_portrait' => $path
+            ]);
             if ($result) {
                 $alert = [
                     'errorCode' => 1,
@@ -174,7 +184,6 @@ class Admin extends MY_Controller
                 ];
             }
         }
-
         $this->loadView('admin/admin_create', [
             'alert' => $alert
         ]);
@@ -189,7 +198,7 @@ class Admin extends MY_Controller
 
         $Id = (int)$this->input->post('Id');
 
-        if ($this->Admin_model->deleteUserById($Id)) {
+        if ($this->Public_model->deleteUserById($this->adminTable,$Id)) {
             $retArr['errorCode'] = 0;
         }
 
@@ -226,7 +235,7 @@ class Admin extends MY_Controller
             }
         }
 
-        if (false === $this->Admin_model->verifyLogin($this->user->username, $params['password'])) {
+        if (false === $this->Public_model->verifyLogin($this->adminTable,$this->user->username, $params['password'])) {
             $retData['message'] = '当前密码不正确，请重新输入';
             $this->jsonOut($retData);
         }
@@ -236,7 +245,7 @@ class Admin extends MY_Controller
             $this->jsonOut($retData);
         }
 
-        if ($this->Admin_model->changeUserPassword($this->user->username, $params['newPassword'])) {
+        if ($this->Public_model->changeUserPassword($this->adminTable,$this->user->username, $params['newPassword'])) {
             $retData = [
                 'errorCode' => 0,
                 'message' => '修改完成，请使用新密码重新登录',
@@ -246,7 +255,7 @@ class Admin extends MY_Controller
 
         $this->jsonOut($retData);
 
-        $this->Admin_model->setLogout();
+        $this->Public_model->setLogout();
 
     }
 }
