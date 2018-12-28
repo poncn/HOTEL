@@ -1,4 +1,4 @@
-<?php require 'inc/alert.php';?>
+<?php require 'inc/alert.php'; ?>
 <div class="row-fluid">
     <div class="box span12">
         <div class="box-header">
@@ -11,35 +11,40 @@
         </div>
         <div class="box-content">
             <form class="form-horizontal" method="post" action="<?php
-            if(isset($data)){
-                echo site_url("Admin/update").'/'.$data->id;
-            }else{
+            if (isset($data)) {
+                echo site_url("Admin/update") . '/' . $data->id;
+            } else {
                 echo site_url("Admin/insert");
-            }?>" enctype="multipart/form-data">
+            } ?>" enctype="multipart/form-data">
                 <fieldset><br>
                     <div class="control-group">
                         <label class="control-label" for="username">Username</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="username" type="text" name="username" maxlength="12" value="<?php if(isset($data)){echo $data->username;}?>">
+                            <input class="input-xlarge focused" id="username" type="text" name="username" maxlength="12"
+                                   value="<?php if (isset($data)) {
+                                       echo $data->username;
+                                   } ?>">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="password">Password</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="password" type="password" name="password" maxlength="12" value="">
+                            <input class="input-xlarge focused" id="password" type="password" name="password"
+                                   maxlength="12" value="">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label" for="rePassword">Repeat password</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="rePassword" type="password" name="rePassword" maxlength="12" value="">
+                            <input class="input-xlarge focused" id="rePassword" type="password" name="rePassword"
+                                   maxlength="12" value="">
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label" for="head_portrait">Head portrait file</label>
                         <div class="controls">
-                            <input class="input-file uniform_on" id="head_portrait" type="file" name="head_portrait" >
+                            <input class="input-file uniform_on" id="head_portrait" type="file" name="head_portrait">
                         </div>
                     </div>
 

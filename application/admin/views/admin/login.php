@@ -59,7 +59,7 @@
                     <fieldset>
 
                         <input class="input-large span12" name="username" id="username" type="text"
-                               placeholder="type username"/>
+                               placeholder="type username" autocomplete="off"/>
 
                         <input class="input-large span12" name="password" id="password" type="password"
                                placeholder="type password"/>
