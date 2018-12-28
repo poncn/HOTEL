@@ -1,7 +1,7 @@
 <div class="row-fluid">
     <div class="box span12">
         <div class="box-header" data-original-title="">
-            <h2><i class="icon-user"></i><span class="break"></span>Users Table</h2>
+            <h2><i class="icon-user"></i><span class="break"></span>User Table</h2>
             <div class="box-icon">
                 <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
                 <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
@@ -31,10 +31,10 @@
                         <td class="center"><?php echo $user->phone;?></td>
                         <td class="center"><?php echo $user->head_portrait;?>
                         <td class="center">
-                            <a class="btn btn-info" href="<?php echo site_url('User/userData').'/'.$user->id;?>">
+                            <a class="btn btn-info" href="<?php echo site_url('Admin/create').'/'.$user->username;?>">
                                 <i class="icon-edit "></i>
                             </a>
-                            <a class="btn btn-danger" href="javascript:void(0);" onclick="userDelete(this,<?php echo $user->id;?>)">
+                            <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $user->id;?>)">
                                 <i class="icon-trash "></i>
                             </a>
                         </td>
@@ -49,13 +49,13 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    function userDelete(obj, userId){
+    function Delete(obj, userId){
         var thisObj = $(obj);
         var userItem = thisObj.parent().parent();
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('User/userDelete'); ?>",
+            url: "<?php echo site_url('User/delete'); ?>",
             data: {'userId': userId},
             dataType: "JSON",
             timeout: 3000

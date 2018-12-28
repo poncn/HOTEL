@@ -36,10 +36,10 @@
                         <td class="center"><?php echo $book->end_time;?>
 
                         <td class="center">
-                            <a class="btn btn-info" href="<?php echo site_url('Book/bookData').'/'.$book->id;?>">
+                            <a class="btn btn-info" href="<?php echo site_url('Book/create').'/'.$book->id;?>">
                                 <i class="icon-edit "></i>
                             </a>
-                            <a class="btn btn-danger" href="javascript:void(0);" onclick="bookDelete(this,<?php echo $book->id;?>)">
+                            <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $book->id;?>)">
                                 <i class="icon-trash "></i>
                             </a>
                         </td>

@@ -20,14 +20,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($data as $v):?>
+                <?php foreach ($admins as $v):?>
                 <tr>
                     <td><?php echo $v->id;?></td>
                     <td class="center"><?php echo $v->username;?></td>
                     <td class="center"><?php echo $v->password;?></td>
                     <td class="center"><?php echo $v->head_portrait;?></td>
                     <td class="center">
-                        <a class="btn btn-info" href="<?php echo site_url('Admin/create').'/'.$v->username;?>">
+                        <a class="btn btn-info" href="<?php echo site_url('Admin/create').'/'.$v->id;?>">
                             <i class="icon-edit "></i>
                         </a>
                         <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $v->id;?>)">

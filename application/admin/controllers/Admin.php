@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Admin extends MY_Controller
 {
 
-    private $adminTable='admin';
+    private $tableName='admin';
 
     public function __construct()
     {
@@ -21,16 +21,16 @@ class Admin extends MY_Controller
 
     public function table()
     {
-        $result = $this->Public_model->getUsers($this->adminTable);
+        $result = $this->Public_model->getUsers($this->tableName);
 
         $this->loadView('admin/admin_table', [
-            'data' => $result
+            'admins' => $result
         ]);
     }
 
-    public function create($username = '')
+    public function create($id = '')
     {
-        if (!($data = $this->Public_model->getUserByUserName($this->adminTable,$username))) {
+        if (!($data = $this->Public_model->getUserById($this->tableName,$id))) {
             $this->loadView('admin/admin_create');
         } else {
             $this->loadView('admin/admin_create', [
@@ -122,7 +122,7 @@ class Admin extends MY_Controller
 
             $path = $config['upload_path'] . $this->upload->data('file_name');
 
-            $result = $this->Public_model->addUser($this->adminTable,[
+            $result = $this->Public_model->addUser($this->tableName,[
                 'username' => $data['username'],
                 'password' => $data['password'],
                 'head_portrait' => $path
@@ -166,7 +166,7 @@ class Admin extends MY_Controller
 
             $path = $config['upload_path'] . $this->upload->data('file_name');
 
-            $result = $this->Public_model->editUserByUserId($this->adminTable,$id, [
+            $result = $this->Public_model->editUserByUserId($this->tableName,$id, [
                 'id' => $id,
                 'username' => $data['username'],
                 'password' => $data['password'],
@@ -198,7 +198,7 @@ class Admin extends MY_Controller
 
         $Id = (int)$this->input->post('Id');
 
-        if ($this->Public_model->deleteUserById($this->adminTable,$Id)) {
+        if ($this->Public_model->deleteUserById($this->tableName,$Id)) {
             $retArr['errorCode'] = 0;
         }
 
@@ -235,7 +235,7 @@ class Admin extends MY_Controller
             }
         }
 
-        if (false === $this->Public_model->verifyLogin($this->adminTable,$this->user->username, $params['password'])) {
+        if (false === $this->Public_model->verifyLogin($this->tableName,$this->user->username, $params['password'])) {
             $retData['message'] = '当前密码不正确，请重新输入';
             $this->jsonOut($retData);
         }
@@ -245,7 +245,7 @@ class Admin extends MY_Controller
             $this->jsonOut($retData);
         }
 
-        if ($this->Public_model->changeUserPassword($this->adminTable,$this->user->username, $params['newPassword'])) {
+        if ($this->Public_model->changeUserPassword($this->tableName,$this->user->username, $params['newPassword'])) {
             $retData = [
                 'errorCode' => 0,
                 'message' => '修改完成，请使用新密码重新登录',

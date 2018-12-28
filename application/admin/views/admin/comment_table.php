@@ -35,10 +35,10 @@
                         <td class="center"><?php echo $comment->room_number;?>
                         <td class="center"><?php echo $comment->time;?>
                         <td class="center">
-                            <a class="btn btn-info" href="<?php echo site_url('Comment/commentData').'/'.$comment->id;?>">
+                            <a class="btn btn-info" href="<?php echo site_url('Comment/create').'/'.$comment->id;?>">
                                 <i class="icon-edit "></i>
                             </a>
-                            <a class="btn btn-danger" href="javascript:void(0);" onclick="commentDelete(this,<?php echo $comment->id;?>)">
+                            <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $comment->id;?>)">
                                 <i class="icon-trash "></i>
                             </a>
                         </td>

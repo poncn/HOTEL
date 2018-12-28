@@ -30,10 +30,10 @@
                         <td class="center"><?php echo $room->introduce;?>
 
                         <td class="center">
-                            <a class="btn btn-info" href="<?php echo site_url('Room/roomData').'/'.$room->number;?>">
+                            <a class="btn btn-info" href="<?php echo site_url('Room/create').'/'.$room->number;?>">
                                 <i class="icon-edit "></i>
                             </a>
-                            <a class="btn btn-danger" href="javascript:void(0);" onclick="roomDelete(this,<?php echo $room->number;?>)">
+                            <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $room->number;?>)">
                                 <i class="icon-trash "></i>
                             </a>
                         </td>

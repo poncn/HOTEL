@@ -38,10 +38,10 @@
 
 
                         <td class="center">
-                            <a class="btn btn-info" href="<?php echo site_url('Type/typeData').'/'.$type->id;?>">
+                            <a class="btn btn-info" href="<?php echo site_url('Type/create').'/'.$type->id;?>">
                                 <i class="icon-edit "></i>
                             </a>
-                            <a class="btn btn-danger" href="javascript:void(0);" onclick="typeDelete(this,<?php echo $type->id;?>)">
+                            <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $type->id;?>)">
                                 <i class="icon-trash "></i>
                             </a>
                         </td>
