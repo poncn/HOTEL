@@ -48,14 +48,14 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    function roomDelete(obj, roomId){
+    function Delete(obj, Id){
         var thisObj = $(obj);
         var roomItem = thisObj.parent().parent();
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Room/roomDelete'); ?>",
-            data: {'roomId': roomId},
+            url: "<?php echo site_url('Room/delete'); ?>",
+            data: {'Id': Id},
             dataType: "JSON",
             timeout: 3000
         }).done(function(retData){

@@ -54,14 +54,14 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    function bookDelete(obj, bookId){
+    function Delete(obj, Id){
         var thisObj = $(obj);
         var bookItem = thisObj.parent().parent();
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Book/bookDelete'); ?>",
-            data: {'bookId': bookId},
+            url: "<?php echo site_url('Book/delete'); ?>",
+            data: {'Id': Id},
             dataType: "JSON",
             timeout: 3000
         }).done(function(retData){

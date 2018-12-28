@@ -53,14 +53,14 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    function commentDelete(obj, commentId){
+    function Delete(obj, Id){
         var thisObj = $(obj);
         var commentItem = thisObj.parent().parent();
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Comment/commentDelete'); ?>",
-            data: {'commentId': commentId},
+            url: "<?php echo site_url('Comment/delete'); ?>",
+            data: {'Id': Id},
             dataType: "JSON",
             timeout: 3000
         }).done(function(retData){

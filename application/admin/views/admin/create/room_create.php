@@ -12,15 +12,15 @@
         <div class="box-content">
             <form class="form-horizontal" method="post" action="<?php
             if(isset($data)){
-                echo site_url("Room/update");
+                echo site_url("Room/update"). '/' . $data->number;
             }else{
                 echo site_url("Room/insert");
             }?>">
                 <fieldset><br>
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Number</label>
+                        <label class="control-label" for="number">Number</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="number" maxlength="10" value="<?php if(isset($data)){echo $data->number;}?>">
+                            <input class="input-xlarge focused" id="number" type="text" name="number" maxlength="10" value="<?php if(isset($data)){echo $data->number;}?>">
                         </div>
                     </div>
 
@@ -32,16 +32,16 @@
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Type id</label>
+                        <label class="control-label" for="type_id">Type id</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="type_id" maxlength="12" value="<?php if(isset($data)){echo $data->type_id;}?>">
+                            <input class="input-xlarge focused" id="type_id" type="text" name="type_id" maxlength="12" value="<?php if(isset($data)){echo $data->type_id;}?>">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="selectError3">Room grade</label>
+                        <label class="control-label" for="grade">Room grade</label>
                         <div class="controls">
-                            <select id="selectError3" name="grade">
+                            <select id="grade" name="grade">
                                 <option value="5" <?php if(isset($data)&&$data->grade==5){echo 'selected';}?>>5 分
                                 <option value="4.5" <?php if(isset($data)&&$data->grade==4.5){echo 'selected';}?>>4.5 分
                                 <option value="4" <?php if(isset($data)&&$data->grade==4){echo 'selected';}?>>4 分

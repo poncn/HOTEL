@@ -23,7 +23,7 @@ class User extends MY_Controller
 
     public function create($id = '')
     {
-        if (!($data = $this->Public_model->getUserById($this->tableName,$id))) {
+        if (!($data = $this->Public_model->getUserById($this->tableName, $id))) {
             $this->loadView('admin/create/user_create');
         } else {
             $this->loadView('admin/create/user_create', [
@@ -68,7 +68,7 @@ class User extends MY_Controller
             array(
                 'field' => 'identity_card',
                 'label' => 'identity_card',
-                'rules' => 'required|is_unique[users.identity_card]|alpha_numeric|exact_length',
+                'rules' => 'required|is_unique[users.identity_card]|alpha_numeric|exact_length[18]',
                 'errors' => array(
                     'required' => '身份证号为必填项',
                     'is_unique' => '身份证正确',
@@ -79,12 +79,12 @@ class User extends MY_Controller
             array(
                 'field' => 'phone',
                 'label' => 'phone',
-                'rules' => 'required|is_unique[users.phone]|numeric|exact_length',
+                'rules' => 'required|is_unique[users.phone]|numeric|exact_length[11]',
                 'errors' => array(
                     'required' => '手机号为必填项',
                     'is_unique' => '手机号已被使用',
                     'numeric' => '手机号只能由数字组成',
-                    '|exact_length' => '手机号只能必须由11位数字组成',
+                    'exact_length' => '手机号只能必须由11位数字组成',
                 ),
             ),
         );
@@ -124,7 +124,7 @@ class User extends MY_Controller
         ];
 
         $data = $this->input->post([
-            'username', 'password', 'rePassword','identity_card','phone'
+            'username', 'password', 'rePassword', 'identity_card', 'phone'
         ]);
 
         $config = $this->upFile();
@@ -137,11 +137,11 @@ class User extends MY_Controller
 
             $path = $config['upload_path'] . $this->upload->data('file_name');
 
-            $result = $this->Public_model->addUser($this->tableName,[
+            $result = $this->Public_model->addUser($this->tableName, [
                 'username' => $data['username'],
                 'password' => $data['password'],
-                'identity_card'=> $data['identity_card'],
-                'phone'=> $data['phone'],
+                'identity_card' => $data['identity_card'],
+                'phone' => $data['phone'],
                 'head_portrait' => $path
             ]);
             if ($result) {
@@ -170,7 +170,7 @@ class User extends MY_Controller
         ];
 
         $data = $this->input->post([
-            'username', 'password', 'rePassword','identity_card','phone'
+            'username', 'password', 'rePassword', 'identity_card', 'phone'
         ]);
 
         $config = $this->upFile();
@@ -183,12 +183,12 @@ class User extends MY_Controller
 
             $path = $config['upload_path'] . $this->upload->data('file_name');
 
-            $result = $this->Public_model->editUserByUserId($this->tableName,$id, [
+            $result = $this->Public_model->editUserByUserId($this->tableName, $id, [
                 'id' => $id,
                 'username' => $data['username'],
                 'password' => $data['password'],
-                'identity_card'=> $data['identity_card'],
-                'phone'=> $data['phone'],
+                'identity_card' => $data['identity_card'],
+                'phone' => $data['phone'],
                 'head_portrait' => $path
             ]);
             if ($result) {
@@ -217,7 +217,7 @@ class User extends MY_Controller
 
         $Id = (int)$this->input->post('Id');
 
-        if ($this->Public_model->deleteUserById($this->tableName,$Id)) {
+        if ($this->Public_model->deleteUserById($this->tableName, $Id)) {
             $retArr['errorCode'] = 0;
         }
 

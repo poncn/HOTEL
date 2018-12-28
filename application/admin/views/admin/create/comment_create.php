@@ -12,57 +12,51 @@
         <div class="box-content">
             <form class="form-horizontal" method="post" action="<?php
             if(isset($data)){
-                echo site_url("Comment/update");
+                echo site_url("Comment/update"). '/' . $data->id;
             }else{
                 echo site_url("Comment/insert");
             }?>">
 
                 <fieldset><br>
-                    <div class="control-group" hidden>
-                        <label class="control-label" for="focusedInput">Id</label>
-                        <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="id" maxlength="12" value="<?php if(isset($data)){echo $data->id;}?>">
-                        </div>
-                    </div>
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Username</label>
+                        <label class="control-label" for="content1">Content</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="content" maxlength="12" value="<?php if(isset($data)){echo $data->content;}?>">
+                            <input class="input-xlarge focused" id="content1" type="text" name="content" value="<?php if(isset($data)){echo $data->content;}?>">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Positive</label>
+                        <label class="control-label" for="positive">Positive</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="positive" maxlength="12" value="<?php if(isset($data)){echo $data->positive;}?>">
+                            <input class="input-xlarge focused" id="positive" type="text" name="positive" value="<?php if(isset($data)){echo $data->positive;}?>">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Negative</label>
+                        <label class="control-label" for="negative">Negative</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="negative" maxlength="18" value="<?php if(isset($data)){echo $data->negative;}?>">
+                            <input class="input-xlarge focused" id="negative" type="text" name="negative" value="<?php if(isset($data)){echo $data->negative;}?>">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Time</label>
+                        <label class="control-label" for="time">Time</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="time" maxlength="11" value="<?php if(isset($data)){echo $data->time;}?>">
+                            <input class="input-xlarge focused" id="time" type="text" name="time" value="<?php if(isset($data)){echo $data->time;}?>">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Username</label>
+                        <label class="control-label" for="username">Username</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="username" maxlength="18" value="<?php if(isset($data)){echo $data->username;}?>">
+                            <input class="input-xlarge focused" id="username" type="text" name="username" maxlength="9" value="<?php if(isset($data)){echo $data->username;}?>">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Room number</label>
+                        <label class="control-label" for="room_number">Room number</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="room_number" maxlength="11" value="<?php if(isset($data)){echo $data->room_number;}?>">
+                            <input class="input-xlarge focused" id="room_number" type="text" name="room_number" maxlength="4" value="<?php if(isset($data)){echo $data->room_number;}?>">
                         </div>
                     </div>
 

@@ -56,14 +56,14 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    function typeDelete(obj, typeId){
+    function Delete(obj, Id){
         var thisObj = $(obj);
         var typeItem = thisObj.parent().parent();
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Type/typeDelete'); ?>",
-            data: {'typeId': typeId},
+            url: "<?php echo site_url('Type/delete'); ?>",
+            data: {'Id': Id},
             dataType: "JSON",
             timeout: 3000
         }).done(function(retData){
