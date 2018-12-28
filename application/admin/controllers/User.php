@@ -16,18 +16,17 @@ class User extends MY_Controller
     {
         $result = $this->Public_model->getUsers($this->tableName);
 
-        $this->loadView('admin/user_table', [
+        $this->loadView('admin/table/user_table', [
             'users' => $result
         ]);
     }
 
-
-    public function create($username = '')
+    public function create($id = '')
     {
-        if (!($data = $this->Public_model->getUserByUserName($this->tableName,$username))) {
-            $this->loadView('admin/user_create');
+        if (!($data = $this->Public_model->getUserById($this->tableName,$id))) {
+            $this->loadView('admin/create/user_create');
         } else {
-            $this->loadView('admin/user_create', [
+            $this->loadView('admin/create/user_create', [
                 'data' => $data
             ]);
         }
@@ -40,7 +39,7 @@ class User extends MY_Controller
             array(
                 'field' => 'username',
                 'label' => 'Username',
-                'rules' => 'required|regex_match[/[A-Za-z0-9]/]|is_unique[admin.username]|min_length[3]|max_length[9]',
+                'rules' => 'required|regex_match[/[A-Za-z0-9]/]|is_unique[users.username]|min_length[3]|max_length[9]',
                 'errors' => array(
                     'required' => '用户名为必填项',
                     'regex_match' => '用户名必须是英文字母和数字',
@@ -66,6 +65,28 @@ class User extends MY_Controller
                     'matches' => '两次密码不一致'
                 ),
             ),
+            array(
+                'field' => 'identity_card',
+                'label' => 'identity_card',
+                'rules' => 'required|is_unique[users.identity_card]|alpha_numeric|exact_length',
+                'errors' => array(
+                    'required' => '身份证号为必填项',
+                    'is_unique' => '身份证正确',
+                    'alpha_numeric' => '身份证必须由数字或字母组成',
+                    'exact_length' => '身份证必须由18位数字或字母组成',
+                ),
+            ),
+            array(
+                'field' => 'phone',
+                'label' => 'phone',
+                'rules' => 'required|is_unique[users.phone]|numeric|exact_length',
+                'errors' => array(
+                    'required' => '手机号为必填项',
+                    'is_unique' => '手机号已被使用',
+                    'numeric' => '手机号只能由数字组成',
+                    '|exact_length' => '手机号只能必须由11位数字组成',
+                ),
+            ),
         );
 
         $this->form_validation->set_rules($config);
@@ -83,7 +104,7 @@ class User extends MY_Controller
 
     public function upFile()
     {
-        $config['upload_path'] = 'public/uploads/admin/';
+        $config['upload_path'] = 'public/uploads/users/';
         $config['allowed_types'] = 'gif|jpg|png|jpeg';
         $config['file_name'] = date('Ymdhim') . rand(1, 9999999) . time();
         $config['max_size'] = 100;
@@ -103,7 +124,7 @@ class User extends MY_Controller
         ];
 
         $data = $this->input->post([
-            'username', 'password', 'rePassword'
+            'username', 'password', 'rePassword','identity_card','phone'
         ]);
 
         $config = $this->upFile();
@@ -119,6 +140,8 @@ class User extends MY_Controller
             $result = $this->Public_model->addUser($this->tableName,[
                 'username' => $data['username'],
                 'password' => $data['password'],
+                'identity_card'=> $data['identity_card'],
+                'phone'=> $data['phone'],
                 'head_portrait' => $path
             ]);
             if ($result) {
@@ -133,7 +156,7 @@ class User extends MY_Controller
                 ];
             }
         }
-        $this->loadView('admin/admin_create', [
+        $this->loadView('admin/create/user_create', [
             'alert' => $alert
         ]);
 
@@ -147,7 +170,7 @@ class User extends MY_Controller
         ];
 
         $data = $this->input->post([
-            'username', 'password', 'rePassword'
+            'username', 'password', 'rePassword','identity_card','phone'
         ]);
 
         $config = $this->upFile();
@@ -164,6 +187,8 @@ class User extends MY_Controller
                 'id' => $id,
                 'username' => $data['username'],
                 'password' => $data['password'],
+                'identity_card'=> $data['identity_card'],
+                'phone'=> $data['phone'],
                 'head_portrait' => $path
             ]);
             if ($result) {
@@ -178,7 +203,7 @@ class User extends MY_Controller
                 ];
             }
         }
-        $this->loadView('admin/admin_create', [
+        $this->loadView('admin/create/user_create', [
             'alert' => $alert
         ]);
 

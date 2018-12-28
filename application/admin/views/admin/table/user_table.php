@@ -31,7 +31,7 @@
                         <td class="center"><?php echo $user->phone;?></td>
                         <td class="center"><?php echo $user->head_portrait;?>
                         <td class="center">
-                            <a class="btn btn-info" href="<?php echo site_url('Admin/create').'/'.$user->username;?>">
+                            <a class="btn btn-info" href="<?php echo site_url('User/create').'/'.$user->id;?>">
                                 <i class="icon-edit "></i>
                             </a>
                             <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $user->id;?>)">
@@ -49,14 +49,14 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    function Delete(obj, userId){
+    function Delete(obj, Id){
         var thisObj = $(obj);
         var userItem = thisObj.parent().parent();
 
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('User/delete'); ?>",
-            data: {'userId': userId},
+            data: {'Id': Id},
             dataType: "JSON",
             timeout: 3000
         }).done(function(retData){

@@ -16,7 +16,7 @@ class Type extends MY_Controller
     {
         $result = $this->Public_model->getUsers($this->tableName);
 
-        $this->loadView('admin/type_table', [
+        $this->loadView('admin/table/type_table', [
             'types' => $result
         ]);
     }

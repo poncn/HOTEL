@@ -16,7 +16,7 @@ class Room extends MY_Controller
     {
         $result = $this->Public_model->getUsers($this->tableName);
 
-        $this->loadView('admin/room_table', [
+        $this->loadView('admin/table/room_table', [
             'rooms' => $result
         ]);
     }

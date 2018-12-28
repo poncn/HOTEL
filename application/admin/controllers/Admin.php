@@ -23,7 +23,7 @@ class Admin extends MY_Controller
     {
         $result = $this->Public_model->getUsers($this->tableName);
 
-        $this->loadView('admin/admin_table', [
+        $this->loadView('admin/table/admin_table', [
             'admins' => $result
         ]);
     }
@@ -31,9 +31,9 @@ class Admin extends MY_Controller
     public function create($id = '')
     {
         if (!($data = $this->Public_model->getUserById($this->tableName,$id))) {
-            $this->loadView('admin/admin_create');
+            $this->loadView('admin/create/admin_create');
         } else {
-            $this->loadView('admin/admin_create', [
+            $this->loadView('admin/create/admin_create', [
                 'data' => $data
             ]);
         }
@@ -139,7 +139,7 @@ class Admin extends MY_Controller
                 ];
             }
         }
-        $this->loadView('admin/admin_create', [
+        $this->loadView('admin/create/admin_create', [
             'alert' => $alert
         ]);
 
@@ -184,7 +184,7 @@ class Admin extends MY_Controller
                 ];
             }
         }
-        $this->loadView('admin/admin_create', [
+        $this->loadView('admin/create/admin_create', [
             'alert' => $alert
         ]);
 

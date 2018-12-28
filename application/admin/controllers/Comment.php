@@ -16,7 +16,7 @@ class Comment extends MY_Controller
     {
         $result = $this->Public_model->getUsers($this->tableName);
 
-        $this->loadView('admin/comment_table', [
+        $this->loadView('admin/table/comment_table', [
             'comments' => $result
         ]);
     }

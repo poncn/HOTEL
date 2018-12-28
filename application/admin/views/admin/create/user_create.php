@@ -1,8 +1,8 @@
-<?php require 'inc/alert.php'; ?>
+<?php require 'alert.php'; ?>
 <div class="row-fluid">
     <div class="box span12">
         <div class="box-header">
-            <h2><i class="icon-edit"></i>Admin Create</h2>
+            <h2><i class="icon-edit"></i>User Create</h2>
             <div class="box-icon">
                 <a href="#" class="btn-setting"><i class="icon-wrench"></i></a>
                 <a href="#" class="btn-minimize"><i class="icon-chevron-up"></i></a>
@@ -12,15 +12,15 @@
         <div class="box-content">
             <form class="form-horizontal" method="post" action="<?php
             if (isset($data)) {
-                echo site_url("Admin/update") . '/' . $data->id;
+                echo site_url("User/update") . '/' . $data->id;
             } else {
-                echo site_url("Admin/insert");
+                echo site_url("User/insert");
             } ?>" enctype="multipart/form-data">
                 <fieldset><br>
                     <div class="control-group">
                         <label class="control-label" for="username">Username</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="username" type="text" name="username" maxlength="9"
+                            <input class="input-xlarge focused" id="username" type="text" name="username" maxlength="12"
                                    value="<?php if (isset($data)) {
                                        echo $data->username;
                                    } ?>">
@@ -38,6 +38,25 @@
                         <div class="controls">
                             <input class="input-xlarge focused" id="rePassword" type="password" name="rePassword"
                                    maxlength="12" value="">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="identity_card">Identity card</label>
+                        <div class="controls">
+                            <input class="input-xlarge focused" id="identity_card" type="text" name="identity_card"
+                                   maxlength="18" value="<?php if (isset($data)) {
+                                echo $data->identity_card;
+                            } ?>">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="phone">Phone</label>
+                        <div class="controls">
+                            <input class="input-xlarge focused" id="phone" type="text" name="phone"
+                                   maxlength="11" value="<?php if (isset($data)) {
+                                echo $data->phone;
+                            } ?>">
                         </div>
                     </div>
 

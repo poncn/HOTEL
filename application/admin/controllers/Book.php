@@ -16,7 +16,7 @@ class Book extends MY_Controller
     {
         $result = $this->Public_model->getUsers($this->tableName);
 
-        $this->loadView('admin/book_table', [
+        $this->loadView('admin/table/book_table', [
             'books' => $result
         ]);
     }
