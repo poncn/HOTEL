@@ -12,7 +12,7 @@
         <div class="box-content">
             <form class="form-horizontal" method="post" action="<?php
             if(isset($data)){
-                echo site_url("Admin/update").'/'.$data->username;
+                echo site_url("Admin/update").'/'.$data->id;
             }else{
                 echo site_url("Admin/insert");
             }?>" enctype="multipart/form-data">

@@ -174,6 +174,8 @@ class Admin_model extends MY_Model
         ]);
     }
 
+
+
     /**
      * 设置新用户
      *
@@ -188,13 +190,15 @@ class Admin_model extends MY_Model
             if(!($user=$this->getUser('username',$where))){
                 return false;
             }
+
             $set['password']=$this->createHashedPassword($user->username,$set['password']);
+
         }
         return parent::set($this->db,$this->adminTable,$where,$set,$limit);
     }
 
     /**
-     * 通过用户编辑用户信息
+     * 通过用户名编辑用户信息
      *
      * @param string $username
      * @param array $set
@@ -209,6 +213,20 @@ class Admin_model extends MY_Model
         return $this->setUser([
             'username'=>trim($username)
         ],$set);
+    }
+
+    public function editUserByUserId($id=0,$set=[],$limit = 1){
+
+        if(isset($set['password'])){
+            if(!($this->getUserById($id))){
+                return false;
+            }
+
+            $set['password']=$this->createHashedPassword($set['username'],$set['password']);
+
+        }
+         return $this->db->limit($limit)
+             ->replace($this->adminTable,$set);
     }
 
     /**

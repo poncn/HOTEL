@@ -18,7 +18,7 @@ class Login extends MY_Controller
     {
 //        $this->Admin_model->setLogout();
         if (false !== $this->Admin_model->getCurrentLogin()) {
-            redirect(site_url('Client/index'));
+            redirect(site_url('Admin/index'));
         }
 
         $this->load->view('admin/login');
@@ -51,9 +51,10 @@ class Login extends MY_Controller
         if ($this->Admin_model->verifyLogin($login['username'], $login['password'])) {
             $retData = [
                 'errorCode' => 0,
-                'redirectUrl' => site_url('User')
+                'redirectUrl' => site_url('Login/index')
             ];
         }
+
         $this->jsonOut($retData);
     }
 

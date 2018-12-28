@@ -208,6 +208,7 @@ class MY_Model extends CI_Model
             $db->limit($limit);
         }
         $flag = $db->update($tableName, $set, $where);
+
         $this->lastQuerySql = $db->last_query();
         if (true === $flag) {
             return true;

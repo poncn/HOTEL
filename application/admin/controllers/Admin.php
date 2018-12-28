@@ -12,6 +12,10 @@ class Admin extends MY_Controller
         $this->load->Model('Request_model');
     }
 
+    public function index(){
+        $this->loadView('admin/index');
+    }
+
     public function table()
     {
         $result = $this->Admin_model->getUsers();
@@ -82,7 +86,7 @@ class Admin extends MY_Controller
 
     }
 
-    public function update($username = null)
+    public function update($id = 0)
     {
         $alert = [
             'errorCode' => 0,
@@ -93,15 +97,17 @@ class Admin extends MY_Controller
             'username', 'password', 'rePassword'
         ]);
 
-        $edit = [
-            'username' => $data['username'],
-            'password' => $data['password'],
-        ];
+        $set = $this->input->post([
+            'username', 'password'
+        ]);
+        $set['id']=$id;
+
+
 
         $alert['message'] = $this->verify($data);
 
         if ($alert['message']) {
-            $result = $this->Admin_model->editUserByUserName($username, $edit);
+            $result=$this->Admin_model->editUserByUserId($id,$set);
             if ($result) {
                 $alert = [
                     'errorCode' => 1,

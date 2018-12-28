@@ -149,6 +149,10 @@
             if (data['message'] && (data['message'].length > 0)) {
                 alert(data['message']);
             }
+
+            if(data['redirectUrl'] && (data['redirectUrl'].length > 0)) {
+                self.location.href=data['redirectUrl'];
+            }
         })
     }
 </script>
