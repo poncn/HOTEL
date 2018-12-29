@@ -21,7 +21,6 @@
                     <th>Num people</th>
                     <th>Pic_1</th>
                     <th>Actions</th>
-
                 </tr>
                 </thead>
                 <tbody>

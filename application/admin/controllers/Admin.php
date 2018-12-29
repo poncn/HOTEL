@@ -28,9 +28,9 @@ class Admin extends MY_Controller
         ]);
     }
 
-    public function create($id = '')
+    public function create($number = '')
     {
-        if (!($data = $this->Public_model->getUserById($this->tableName,$id))) {
+        if (!($data = $this->Public_model->getUserById($this->tableName,$number))) {
             $this->loadView('admin/create/admin_create');
         } else {
             $this->loadView('admin/create/admin_create', [
@@ -145,7 +145,7 @@ class Admin extends MY_Controller
 
     }
 
-    public function update($id = 0)
+    public function update($number = 0)
     {
         $alert = [
             'errorCode' => 0,

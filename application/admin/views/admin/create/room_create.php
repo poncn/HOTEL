@@ -12,22 +12,22 @@
         <div class="box-content">
             <form class="form-horizontal" method="post" action="<?php
             if(isset($data)){
-                echo site_url("Room/update"). '/' . $data->number;
+                echo site_url("Room/update"). '/' . $data->id;
             }else{
                 echo site_url("Room/insert");
             }?>">
                 <fieldset><br>
                     <div class="control-group">
-                        <label class="control-label" for="number">Number</label>
+                        <label class="control-label" for="id1">ID</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="number" type="text" name="number" maxlength="10" value="<?php if(isset($data)){echo $data->number;}?>">
+                            <input class="input-xlarge focused" id="id1" type="text" name="id" value="<?php if(isset($data)){echo $data->id;}?>">
                         </div>
                     </div>
 
                     <div class="control-group">
-                        <label class="control-label" for="focusedInput">Introduce</label>
+                        <label class="control-label" for="introduce">Introduce</label>
                         <div class="controls">
-                            <input class="input-xlarge focused" id="focusedInput" type="text" name="introduce" maxlength="12" value="<?php if(isset($data)){echo $data->introduce;}?>">
+                            <input class="input-xlarge focused" id="introduce" type="text" name="introduce" maxlength="12" value="<?php if(isset($data)){echo $data->introduce;}?>">
                         </div>
                     </div>
 

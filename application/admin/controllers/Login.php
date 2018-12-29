@@ -9,7 +9,7 @@ class Login extends MY_Controller
     {
         parent::__construct();
 
-        $this->load->Model('Admin_model');
+        $this->load->Model('Public_model');
     }
 
     /**
@@ -17,8 +17,8 @@ class Login extends MY_Controller
      */
     public function index()
     {
-//        $this->Admin_model->setLogout();
-        if (false !== $this->Admin_model->getCurrentLogin()) {
+//        $this->Public_model->setLogout();
+        if (false !== $this->Public_model->getCurrentLogin()) {
             redirect(site_url('Admin/index'));
         }
 
@@ -49,7 +49,7 @@ class Login extends MY_Controller
 
         }
 
-        if ($this->Admin_model->verifyLogin($this->adminTable,$login['username'], $login['password'])) {
+        if ($this->Public_model->verifyLogin($this->adminTable,$login['username'], $login['password'])) {
             $retData = [
                 'errorCode' => 0,
                 'redirectUrl' => site_url('Login/index')
@@ -69,8 +69,8 @@ class Login extends MY_Controller
 
         if (is_array(($ret = $this->SSOClient->verify($requestString))) && ('0000' === $ret['errorCode'])) {
             //设置目标用户登录逻辑
-            if ($this->Admin_model->getUserByUsername($ret['username'])) {
-                $this->Admin_model->setLogin($ret['username']);
+            if ($this->Public_model->getUserByUsername($ret['username'])) {
+                $this->Public_model->setLogin($ret['username']);
                 redirect(site_url());
             }
         }

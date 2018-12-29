@@ -37,32 +37,49 @@ class Room extends MY_Controller
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field' => 'username',
-                'label' => 'Username',
-                'rules' => 'required|regex_match[/[A-Za-z0-9]/]|is_unique[admin.username]|min_length[3]|max_length[9]',
+                'field' => 'id',
+                'label' => 'id',
+                'rules' => 'required|numeric',
                 'errors' => array(
-                    'required' => '用户名为必填项',
-                    'regex_match' => '用户名必须是英文字母和数字',
-                    'is_unique' => '用户名已存在',
-                    'min_length' => '用户名最少由3个字母或数字组成',
-                    'max_length' => '用户名最多由9个字母或数字组成',
+                    'required' => '房间号为必填项',
+                    'numeric' => '房间号必须由数字组成',
                 ),
             ),
             array(
-                'field' => 'password',
-                'label' => 'password',
+                'field' => 'introduce',
+                'label' => 'introduce',
                 'rules' => 'required',
                 'errors' => array(
-                    'required' => '密码为必填项',
+                    'required' => '房间介绍为必填项',
                 ),
             ),
             array(
-                'field' => 'rePassword',
-                'label' => 'rePassword',
-                'rules' => 'required|matches[password]',
+                'field' => 'type_id',
+                'label' => 'type_id',
+                'rules' => 'required|numeric',
                 'errors' => array(
-                    'required' => '重复密码为必填项',
-                    'matches' => '两次密码不一致'
+                    'required' => '房间样式ID为必填项',
+                    'numeric' => '房间样式ID由数字组成'
+                ),
+            ),
+            array(
+                'field' => 'grade',
+                'label' => 'grade',
+                'rules' => 'required|numeric|less_than_equal_to[5]',
+                'errors' => array(
+                    'required' => '房间等级为必填项',
+                    'numeric' => '房间等级由数字组成',
+                    'less_than_equal_to' => '房间等级不能大于5'
+                ),
+            ),
+            array(
+                'field' => 'state',
+                'label' => 'state',
+                'rules' => 'required|numeric|less_than_equal_to[1]',
+                'errors' => array(
+                    'required' => '房间状态为必填项',
+                    'numeric' => '房间状态由数字组成',
+                    'less_than_equal_to' => '房间状态不能大于1'
                 ),
             ),
         );
@@ -80,20 +97,6 @@ class Room extends MY_Controller
         return true;
     }
 
-    public function upFile()
-    {
-        $config['upload_path'] = 'public/uploads/admin/';
-        $config['allowed_types'] = 'gif|jpg|png|jpeg';
-        $config['file_name'] = date('Ymdhim') . rand(1, 9999999) . time();
-        $config['max_size'] = 100;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
-
-        $this->load->library('upload', $config);
-
-        return $config;
-    }
-
     public function insert()
     {
         $alert = [
@@ -102,24 +105,14 @@ class Room extends MY_Controller
         ];
 
         $data = $this->input->post([
-            'username', 'password', 'rePassword'
+            'id', 'introduce', 'type_id','grade', 'state'
         ]);
-
-        $config = $this->upFile();
 
         if ($this->verify() !== true) {
             $alert['message'] = $this->verify();
-        } else if (!($this->upload->do_upload('head_portrait'))) {
-            $alert['message'] = $this->upload->display_errors('', '');
-        } else {
+        }else {
 
-            $path = $config['upload_path'] . $this->upload->data('file_name');
-
-            $result = $this->Public_model->addUser($this->tableName,[
-                'username' => $data['username'],
-                'password' => $data['password'],
-                'head_portrait' => $path
-            ]);
+            $result = $this->Public_model->addUser($this->tableName,$data);
             if ($result) {
                 $alert = [
                     'errorCode' => 1,
@@ -146,25 +139,14 @@ class Room extends MY_Controller
         ];
 
         $data = $this->input->post([
-            'username', 'password', 'rePassword'
+            'id', 'introduce', 'type_id','grade', 'state'
         ]);
 
-        $config = $this->upFile();
 
         if ($this->verify() !== true) {
             $alert['message'] = $this->verify();
-        } else if (!($this->upload->do_upload('head_portrait'))) {
-            $alert['message'] = $this->upload->display_errors('', '');
-        } else {
-
-            $path = $config['upload_path'] . $this->upload->data('file_name');
-
-            $result = $this->Public_model->editUserByUserId($this->tableName,$id, [
-                'id' => $id,
-                'username' => $data['username'],
-                'password' => $data['password'],
-                'head_portrait' => $path
-            ]);
+        }else {
+            $result = $this->Public_model->editUserByUserId($this->tableName,$id, $data);
             if ($result) {
                 $alert = [
                     'errorCode' => 1,

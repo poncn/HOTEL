@@ -220,8 +220,7 @@ class Public_model extends MY_Model
             $set['password']=$this->createHashedPassword($set['username'],$set['password']);
 
         }
-        return $this->db->limit($limit)
-            ->replace($tableName,$set);
+        return $this->set($this->db, $tableName, ['id' => (int)$id], $set, $limit);
     }
 
     /**

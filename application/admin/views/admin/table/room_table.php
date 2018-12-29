@@ -12,7 +12,7 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                 <tr>
-                    <th>Number</th>
+                    <th>ID</th>
                     <th>State</th>
                     <th>Grade</th>
                     <th>Introduce</th>
@@ -23,17 +23,17 @@
                 <tbody>
                 <?php if(isset($rooms)):foreach ($rooms as $room):?>
                     <tr>
-                        <td><?php echo $room->number;?></td>
+                        <td><?php echo $room->id;?></td>
 
                         <td class="center"><?php echo $room->state;?></td>
                         <td class="center"><?php echo $room->grade;?></td>
                         <td class="center"><?php echo $room->introduce;?>
 
                         <td class="center">
-                            <a class="btn btn-info" href="<?php echo site_url('Room/create').'/'.$room->number;?>">
+                            <a class="btn btn-info" href="<?php echo site_url('Room/create').'/'.$room->id;?>">
                                 <i class="icon-edit "></i>
                             </a>
-                            <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $room->number;?>)">
+                            <a class="btn btn-danger" href="javascript:void(0);" onclick="Delete(this,<?php echo $room->id;?>)">
                                 <i class="icon-trash "></i>
                             </a>
                         </td>
