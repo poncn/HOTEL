@@ -49,7 +49,7 @@ class SSOClient
     //可信服务端来源地址池
     const IN_COMING_SERVERS = ['127.0.0.1'];
     //回城校验服务器地址
-    const RETURN_VERIFY_SERVER_URL = 'http://127.0.0.1/mysso/index.php/Verify/index';
+    const RETURN_VERIFY_SERVER_URL = 'http://127.0.0.1/my_hotel/admin.php/Verify/index';
     //签名密钥
     const PRIVATE_KEY = 'wyYmEPADwRSz66gNwdbyYMxkKRH3VEih';
 
@@ -58,8 +58,9 @@ class SSOClient
      *
      * @return bool
      */
-    public function VerifyComingAddress()
+    private function VerifyComingAddress()
     {
+        //ip_address:CI调用本机IP地址
         $CI =& get_instance();
         if (in_array($CI->input->ip_address(), self::IN_COMING_SERVERS)) {
             return true;
@@ -80,12 +81,13 @@ class SSOClient
         }
 
         //通过既定分隔符将各个参数分开并保存到数组
+        //explode:将字符串打散成数组   urldecode:将加号(+)变成空格( )
         $tmpArr = (explode(self::PARAMS_DELIMITER, urldecode($requestString)));
-
         $i = 0;
         $requestArr = [];
         foreach ($tmpArr as $v) {
-            if (-1 === strpos($v, self::KEY_VALuE_DELIMITER)) {
+            //strpos() 函数查找字符串在另一字符串中第一次出现的位置。
+            if (false === strpos($v, self::KEY_VALuE_DELIMITER)) {
                 //每个值都应该由键值对组成，此时在字符串内没有找到分隔符等号，直接结束校验
                 return false;
             }
@@ -110,7 +112,6 @@ class SSOClient
         }
         return $requestArr;
     }
-
 
     /**
      * 生成请求签名
@@ -147,7 +148,6 @@ class SSOClient
     {
         if (self::REQUEST_MAX_TIME_DIFF > ($_SERVER['REQUEST_TIME'] = $requestTime)) {
             return true;
-
         }
         return false;
     }
@@ -160,6 +160,7 @@ class SSOClient
      */
     private function buildReturnVerifyString($requestArray = [])
     {
+        //http_build_query:生成 URL-encode 之后的请求字符串
         return urlencode(http_build_query([
             //按回城校验顺序格式创建字符串
             self::REQUEST_USERNAME_FIELD => $requestArray[self::REQUEST_USERNAME_FIELD],
@@ -177,6 +178,7 @@ class SSOClient
      */
     private function sendRequestVerify($returnVerifyString = '')
     {
+        //curl_init — 初始化 cURL 会话
         $ch = curl_init(self::RETURN_VERIFY_SERVER_URL);
 
         $curl_config = [
@@ -189,8 +191,9 @@ class SSOClient
                 'return_verify' => $returnVerifyString
             ]
         ];
-
+        //curl_setopt_array - 为cURL传输会话批量设置选项。
         curl_setopt_array($ch, $curl_config);
+        //curl_exec - 执行一个cURL会话
         $retString = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
@@ -285,6 +288,4 @@ class SSOClient
             'username' => $requestArr[self::REQUEST_USERNAME_FIELD]
         ];
     }
-
-
 }

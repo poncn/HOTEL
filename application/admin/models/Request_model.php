@@ -46,16 +46,13 @@ class Request_model extends MY_Model
         '9004' => '请求超过有效期'
     ];
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * 生成请求签名
+     *
      * @param string $clientKey
      * @param string $usernmae
-     * @param int $requestTime
+     * @param int    $requestTime
+     *
      * @return bool|string
      */
     public function createSignatureString($clientKey = '', $username = '', $requestTime = 0)
@@ -67,7 +64,8 @@ class Request_model extends MY_Model
      * 生成请求
      *
      * @param string $username
-     * @param int $clientId
+     * @param int    $clientId
+     *
      * @return bool|string
      */
     public function createRequest($username = '', $clientId = 0)
@@ -97,6 +95,7 @@ class Request_model extends MY_Model
      * 解码来源请求
      *
      * @param string $requestString
+     *
      * @return array|bool
      */
     private function decodeRequestString($requestString = '')
@@ -140,7 +139,9 @@ class Request_model extends MY_Model
 
     /**
      * 校验求证信息
+     *
      * @param string $verifyString
+     *
      * @return array
      */
     public function verifyRequest($verifyString = '')

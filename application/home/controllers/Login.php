@@ -31,12 +31,14 @@ class Login extends CI_Controller
         echo $ret['message'];
     }
 
-    public function test($requestString = 'ddasd##sacxaswyYmEPAD#wRSz66#gNwdb#yYMxkKR#H3VEih45')
+    public function test($requestString = 'username=username&request_time=59&signature=1ebfe4db6f9b6798e5d4a4edcf57abd1')
     {
         $this->load->library('SSOClient');
-        $result = $this->ssoclient->VerifyComingAddress();
-//        $result = $this->ssoclient->verify($requestString);
-        var_dump($_SERVER['SERVER_ADDR']);
+
+//        1ebfe4db6f9b6798e5d4a4edcf57abd1
+//        $result = md5('wyYmEPADwRSz66gNwdbyYMxkKRH3VEihusername59');
+        $result = $this->ssoclient->verify($requestString);
+        var_dump($result);
 //        $this->ssoLogin($txt);
     }
 

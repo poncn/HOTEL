@@ -16,10 +16,9 @@ class Client extends My_Controller
      */
     public function index()
     {
-        $this->loadView('admin/index');
-//            ,[
-//            'clients' => $this->Client_model->getValidClients()
-//        ]);
+        $this->loadView('admin/index',[
+            'clients' => $this->Client_model->getValidClients()
+        ]);
     }
 
     /**
