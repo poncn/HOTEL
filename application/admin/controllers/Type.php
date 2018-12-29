@@ -23,7 +23,7 @@ class Type extends MY_Controller
 
     public function create($id = '')
     {
-        if (!($data = $this->Public_model->getUserById($this->tableName,$id))) {
+        if (!($data = $this->Public_model->getUserById($this->tableName, $id))) {
             $this->loadView('admin/create/type_create');
         } else {
             $this->loadView('admin/create/type_create', [
@@ -83,47 +83,7 @@ class Type extends MY_Controller
                 'errors' => array(
                     'required' => '可住人数为必填项',
                 ),
-            ),
-            array(
-                'field' => 'pic_1',
-                'label' => 'pic_1',
-                'rules' => 'required',
-                'errors' => array(
-                    'required' => '介绍图1为必填项',
-                ),
-            ),
-            array(
-                'field' => 'pic_2',
-                'label' => 'pic_2',
-                'rules' => 'required',
-                'errors' => array(
-                    'required' => '介绍图2为必填项',
-                ),
-            ),
-            array(
-                'field' => 'pic_3',
-                'label' => 'pic_3',
-                'rules' => 'required',
-                'errors' => array(
-                    'required' => '介绍图3为必填项',
-                ),
-            ),
-            array(
-                'field' => 'pic_4',
-                'label' => 'pic_4',
-                'rules' => 'required',
-                'errors' => array(
-                    'required' => '介绍图4为必填项',
-                ),
-            ),
-            array(
-                'field' => 'pic_5',
-                'label' => 'pic_5',
-                'rules' => 'required',
-                'errors' => array(
-                    'required' => '介绍图5为必填项',
-                ),
-            ),
+            )
         );
 
         $this->form_validation->set_rules($config);
@@ -159,34 +119,31 @@ class Type extends MY_Controller
             'errorCode' => 0,
             'message' => '创建失败'
         ];
-
         $data = $this->input->post([
             'type', 'unit_price', 'bedroom', 'bed', 'toilet', 'num_people'
         ]);
-
-        $config = $this->upFile();
-
-        if ($this->verify() !== true) {
-            $alert['message'] = $this->verify();
-        } else if (!($this->upload->do_upload(['pic_1', 'pic_2', 'pic_3', 'pic_4', 'pic_5']))) {
-            $alert['message'] = $this->upload->display_errors('', '');
+        if ($this->verify($data) !== true) {
+            $alert['message'] = $this->verify($data);
+            $this->loadView('admin/create/type_create', ['alert' => $alert]);
         } else {
+            $config = $this->upFile();
+            //循环处理上传文件
+            foreach ($_FILES as $key => $v) {
+                if (empty($key['name'])) {
+                    static $i = 1;
+                    if ($this->upload->do_upload($key)) {
+                        //上传成功
+                        $data["pic_" . $i] = $config['upload_path'] . $this->upload->data('file_name');
+                        $i++;
+                    } else {
+                        //上传失败
+                        $alert['message'] = $this->upload->display_errors('', '');
+                        break;
+                    }
+                }
+            }
+            $result = $this->Public_model->addUser($this->tableName, $data);
 
-            $path = $config['upload_path'] . $this->upload->data('file_name');
-
-            $result = $this->Public_model->addUser($this->tableName,[
-                'type' => $data['type'],
-                'unit_price' => $data['unit_price'],
-                'bedroom' => $data['bedroom'],
-                'bed' => $data['bed'],
-                'toilet' => $data['toilet'],
-                'num_people' => $data['num_people'],
-                'pic_1' => $path,
-                'pic_2' => $path,
-                'pic_3' => $path,
-                'pic_4' => $path,
-                'pic_5' => $path,
-            ]);
             if ($result) {
                 $alert = [
                     'errorCode' => 1,
@@ -198,11 +155,8 @@ class Type extends MY_Controller
                     'message' => '创建失败'
                 ];
             }
+            $this->loadView('admin/create/type_create', ['alert' => $alert]);
         }
-        $this->loadView('admin/create/type_create', [
-            'alert' => $alert
-        ]);
-
     }
 
     public function update($id = 0)
@@ -213,25 +167,31 @@ class Type extends MY_Controller
         ];
 
         $data = $this->input->post([
-            'username', 'password', 'rePassword'
+            'type', 'unit_price', 'bedroom', 'bed', 'toilet', 'num_people'
         ]);
-
-        $config = $this->upFile();
-
-        if ($this->verify() !== true) {
-            $alert['message'] = $this->verify();
-        } else if (!($this->upload->do_upload('head_portrait'))) {
-            $alert['message'] = $this->upload->display_errors('', '');
+        $data['id'] = $id;
+        if ($this->verify($data) !== true) {
+            $alert['message'] = $this->verify($data);
+            $this->loadView('admin/create/type_create', ['alert' => $alert]);
         } else {
+            $config = $this->upFile();
+            //循环处理上传文件
+            foreach ($_FILES as $key => $v) {
+                if (empty($key['name'])) {
+                    static $i = 1;
+                    if ($this->upload->do_upload($key)) {
+                        //上传成功
+                        $data["pic_" . $i] = $config['upload_path'] . $this->upload->data('file_name');
+                        $i++;
+                    } else {
+                        //上传失败
+                        $alert['message'] = $this->upload->display_errors('', '');
+                        break;
+                    }
+                }
+            }
+            $result = $this->Public_model->editUserByUserId($this->tableName,$id,$data);
 
-            $path = $config['upload_path'] . $this->upload->data('file_name');
-
-            $result = $this->Public_model->editUserByUserId($this->tableName,$id, [
-                'id' => $id,
-                'username' => $data['username'],
-                'password' => $data['password'],
-                'head_portrait' => $path
-            ]);
             if ($result) {
                 $alert = [
                     'errorCode' => 1,
@@ -243,11 +203,8 @@ class Type extends MY_Controller
                     'message' => '修改失败'
                 ];
             }
+            $this->loadView('admin/create/type_create', ['alert' => $alert]);
         }
-        $this->loadView('admin/create/type_create', [
-            'alert' => $alert
-        ]);
-
     }
 
     public function delete()
@@ -258,7 +215,7 @@ class Type extends MY_Controller
 
         $Id = (int)$this->input->post('Id');
 
-        if ($this->Public_model->deleteUserById($this->tableName,$Id)) {
+        if ($this->Public_model->deleteUserById($this->tableName, $Id)) {
             $retArr['errorCode'] = 0;
         }
 

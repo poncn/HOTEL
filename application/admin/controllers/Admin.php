@@ -39,7 +39,7 @@ class Admin extends MY_Controller
         }
     }
 
-    public function verify($data = [])
+    public function verify()
     {
         $this->load->library('form_validation');
         $config = array(
@@ -145,7 +145,7 @@ class Admin extends MY_Controller
 
     }
 
-    public function update($number = 0)
+    public function update($id = 0)
     {
         $alert = [
             'errorCode' => 0,

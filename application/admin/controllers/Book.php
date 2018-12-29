@@ -32,7 +32,7 @@ class Book extends MY_Controller
         }
     }
 
-    public function verify($data = [])
+    public function verify()
     {
         $this->load->library('form_validation');
         $config = array(
