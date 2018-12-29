@@ -68,6 +68,7 @@ class Public_model extends MY_Model
         return (isset($_SESSION[self::USER_SESSION_SIGN])) ? $_SESSION[self::USER_SESSION_SIGN] : false;
     }
 
+
     /**
      * 获取当前登录用户信息
      *
@@ -80,7 +81,6 @@ class Public_model extends MY_Model
         }
         return false;
     }
-
 
     /**
      * 获取单个用户

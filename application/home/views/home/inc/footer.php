@@ -2,7 +2,7 @@
     <div class="col-1"></div>
     <div class="col-6 ">
         © 2018 bwgl.cn 版权所有&nbsp;
-        <img src="public/img/put_on_records.png " alt="">
+        <img src="<?php echo base_url('public/home/img/put_on_records.png')?>" alt="">
         <a href="https://www.beian.gov.cn">桂公网安备 45031102000011号</a>
         <p>桂林博文酒家服务有限公司</p>
     </div>
