@@ -54,11 +54,6 @@ class SSOClient
     //签名密钥
     const PRIVATE_KEY = 'wyYmEPADwRSz66gNwdbyYMxkKRH3VEih';
 
-    public function __construct($params)
-    {
-        // Do something with $params
-    }
-
     /**
      * 校验来源地址
      *

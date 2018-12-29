@@ -58,9 +58,10 @@ class SSOClient
      *
      * @return bool
      */
-    private function VerifyComingAddress()
+    public function VerifyComingAddress()
     {
-        if (in_array($this->input->ip_address(), self::IN_COMING_SERVERS)) {
+        $CI =& get_instance();
+        if (in_array($CI->input->ip_address(), self::IN_COMING_SERVERS)) {
             return true;
         }
         return false;

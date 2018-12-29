@@ -17,6 +17,7 @@ class Login extends MY_Controller
      */
     public function index()
     {
+
         if (false !== $this->Public_model->getCurrentLogin()) {
             redirect(site_url('Admin/index'));
         }
