@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends MY_Controller
 {
-
     private $tableName='admin';
 
     public function __construct()
@@ -11,7 +10,7 @@ class Admin extends MY_Controller
         parent::__construct();
 
         $this->load->Model('Public_model');
-        $this->load->Model('Request_model');
+
     }
 
     public function index()
@@ -204,16 +203,6 @@ class Admin extends MY_Controller
 
         $this->jsonOut($retArr);
 
-    }
-
-    /**
-     *  跳转客户端
-     */
-    public function getClient($clientId = 0)
-    {
-        if (false !== ($url = $this->Request_model->createRequest($this->user->username, (int)$clientId))) {
-            redirect($url);
-        }
     }
 
     public function doChangPassword()

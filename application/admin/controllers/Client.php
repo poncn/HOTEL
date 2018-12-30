@@ -173,55 +173,54 @@ class Client extends My_Controller
 
     }
 
-
-
-
-    /**
-     * 检查密钥可用
-     *
-     * @param string $privateKey
-     * @return mixed
-     */
-    private function checkPrivateKey($privateKey = '')
+    public function goClient($username='',$clientId = 0)
     {
-        return $this->Client_model->getClientByPrivateKey($privateKey);
+        $this->load->Model('Request_model');
+        if (false !== ($url = $this->Request_model->createRequest($username, (int)$clientId))) {
+            redirect($url);
+        }
     }
 
-    /**
-     * 执行创建客户端
-     */
-    public function doClientAdd()
+    public function doChangPassword()
     {
         $retData = [
             'errorCode' => 1,
-            'message' => '创建失败'
+            'message' => '修改失败'
         ];
 
-        $createClient = $this->input->post([
-            'clientName', 'clientKey', 'clientUrl', 'clientState'
+        $params = $this->input->post([
+            'password', 'newPassword', 'rePassword'
         ], true);
 
-        foreach ($createClient as $k => $v) {
+        foreach ($params as $k=>$v) {
             if (!isset($v[0])) {
-                $retData['message'] = "$k 不能为空,请返回修改";
+                $retData['message'] = "$k 不能为空，请返回修改";
                 $this->jsonOut($retData);
+                break;
             }
         }
 
-        if (false !== $this->checkPrivateKey($createClient['clientKey'])) {
-            $retData['message'] = "签名密钥已被占用，请返回修改";
+        if (false === $this->User_model ->verifyLogin($this->user->username, $params['password'])) {
+            $retData['message'] = '当前密码不正确，请重新输入';
             $this->jsonOut($retData);
         }
 
-        if ($this->Client_model->addClientWithParams($createClient['clientName'], $createClient['clientKey'], $createClient['clientUrl'], $createClient['clientState'])) {
+        if ($params['newPassword'] !== $params['rePassword']) {
+            $retData['message'] = '两次密码输入不一致，请重新输入';
+            $this->jsonOut($retData);
+        }
+
+        if ($this->User_model->changeUserPassword($this->user->username, $params['newPassword'])) {
             $retData = [
                 'errorCode' => 0,
-                'message' => '创建完成',
-                'redirectUrl' => site_url('Admin/ClientManager/index')
+                'message' => '修改完成，请使用新密码重新登录',
+                'redirectUrl' => site_url()
             ];
         }
+
         $this->jsonOut($retData);
+
+        $this->User_model->setLogout();
+
     }
-
-
 }

@@ -49,7 +49,7 @@ class SSOClient
     //可信服务端来源地址池
     const IN_COMING_SERVERS = ['127.0.0.1'];
     //回城校验服务器地址
-    const RETURN_VERIFY_SERVER_URL = 'http://127.0.0.1/my_hotel/admin.php/Verify/index';
+    const RETURN_VERIFY_SERVER_URL = 'http://my.hotel/admin.php/Verify/index';
     //签名密钥
     const PRIVATE_KEY = 'wyYmEPADwRSz66gNwdbyYMxkKRH3VEih';
 
@@ -146,7 +146,7 @@ class SSOClient
      */
     private function verifyTimeDiff($requestTime = 0)
     {
-        if (self::REQUEST_MAX_TIME_DIFF > ($_SERVER['REQUEST_TIME'] = $requestTime)) {
+        if (self::REQUEST_MAX_TIME_DIFF > ($_SERVER['REQUEST_TIME'] - $requestTime)) {
             return true;
         }
         return false;
@@ -178,12 +178,12 @@ class SSOClient
      */
     private function sendRequestVerify($returnVerifyString = '')
     {
+
         //curl_init — 初始化 cURL 会话
         $ch = curl_init(self::RETURN_VERIFY_SERVER_URL);
-
         $curl_config = [
             CURLOPT_HEADER => 0,
-            CURLOPT_PORT => 1,
+            CURLOPT_POST => 1,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_TIMEOUT => 5,
@@ -191,13 +191,13 @@ class SSOClient
                 'return_verify' => $returnVerifyString
             ]
         ];
+
         //curl_setopt_array - 为cURL传输会话批量设置选项。
         curl_setopt_array($ch, $curl_config);
         //curl_exec - 执行一个cURL会话
         $retString = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-
         //HTTP状态码不为200，访问失败
         if (200 !== (int)$httpCode) {
             return false;
@@ -213,6 +213,7 @@ class SSOClient
      */
     private function decodeReturnVerify($retString = '')
     {
+
         if (false === ($ret = json_decode($retString))) {
             //JSON格式解码失败表示返回信息有误，返回失败
             return false;
@@ -264,7 +265,6 @@ class SSOClient
                 'message' => self::ERROR_CODE['1003']
             ];
         }
-
         //发送回城校验
         if (false === ($returnVerify = $this->sendRequestVerify(
                 $this->buildReturnVerifyString($requestArr)
@@ -274,8 +274,7 @@ class SSOClient
                 'message' => self::ERROR_CODE['2001']
             ];
         }
-
-        if (false === $this->decodeReturnVerify($requestArr)) {
+        if (false === $this->decodeReturnVerify($returnVerify)) {
             return [
                 'errorCode' => '1004',
                 'message' => self::ERROR_CODE['1004']

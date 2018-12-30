@@ -12,6 +12,7 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                 <tr>
+                    <th>flow_id</th>
                     <th>request_client_id</th>
                     <th>uaername</th>
                     <th>request_time</th>
@@ -22,6 +23,7 @@
                 <tbody>
                 <?php foreach ($request as $v):?>
                     <tr>
+                        <td><?php echo $v->flow_id;?></td>
                         <td><?php echo $v->request_client_id;?></td>
                         <td class="center"><?php echo $v->uaername;?></td>
                         <td class="center"><?php echo $v->request_time;?></td>

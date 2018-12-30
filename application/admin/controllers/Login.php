@@ -17,7 +17,7 @@ class Login extends MY_Controller
      */
     public function index()
     {
-
+//        $this->Public_model->setLogout();
         if (false !== $this->Public_model->getCurrentLogin()) {
             redirect(site_url('Admin/index'));
         }
@@ -62,6 +62,5 @@ class Login extends MY_Controller
         $this->Public_model->setLogout();
         redirect('Login/index');
     }
-
 
 }

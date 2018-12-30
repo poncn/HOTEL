@@ -45,7 +45,7 @@
 <div class="modal fade" id="login">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="" method="post" class="register-form">
+            <form action="<?php echo site_url('Login/doLogin')?>" method="post" class="register-form">
                 <!-- 模态框头部 -->
                 <div class="modal-header">
                     <h4 class="modal-title">用户登录</h4>
@@ -56,14 +56,13 @@
                 <div class="modal-body login-body">
 
                     <label for="username" class="fa fa-user-o"></label>
-                    <input class="form-control-lg" type="text" placeholder="用户名"><br>
-                    <label for="password" class="fa fa-key"></label>
-                    <input class="form-control-lg" type="password" placeholder="密码"><br>
-                </div>
-
+                    <input class="form-control-lg" type="text" placeholder="用户名" name="username"><br>
+<!--                    <label for="password" class="fa fa-key"></label>-->
+<!--                    <input class="form-control-lg" type="password" placeholder="密码"><br>-->
+<!--                </div>-->
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">登录</button>
+                    <button type="submit" class="btn btn-secondary">登录</button>
                 </div>
             </form>
         </div>

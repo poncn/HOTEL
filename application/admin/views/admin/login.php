@@ -58,11 +58,9 @@
                 <form class="form-horizontal" method="post" onsubmit="return false;">
                     <fieldset>
 
-                        <input class="input-large span12" name="username" id="username" type="text"
-                               placeholder="type username" autocomplete="off"/>
+                        <input class="input-large span12" name="username" id="username" type="text" placeholder="type username" autocomplete="off" style="background-color: #7a8081;">
 
-                        <input class="input-large span12" name="password" id="password" type="password"
-                               placeholder="type password"/>
+                        <input class="input-large span12" name="password" id="password" type="password" placeholder="type password" style="background-color: #7a8081;">
 
                         <div class="clearfix"></div>
 
@@ -150,8 +148,8 @@
                 alert(data['message']);
             }
 
-            if(data['redirectUrl'] && (data['redirectUrl'].length > 0)) {
-                self.location.href=data['redirectUrl'];
+            if (data['redirectUrl'] && (data['redirectUrl'].length > 0)) {
+                self.location.href = data['redirectUrl'];
             }
         })
     }

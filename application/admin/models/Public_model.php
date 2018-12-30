@@ -43,7 +43,7 @@ class Public_model extends MY_Model
      * @param string $username
      * @return bool
      */
-    public function setLogin($username = '')
+    public function setLogin($username = '',$hand_portrait='')
     {
         $_SESSION[self::USER_SESSION_SIGN] = $username;
         return true;

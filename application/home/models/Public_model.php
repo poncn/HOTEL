@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Public_model extends MY_Model
 {
+
     //用户名session标记项
     const USER_SESSION_SIGN = 'username';
     const USER_PASSWORD_SALT = 'this_is_my_hotel';
@@ -68,7 +69,6 @@ class Public_model extends MY_Model
         return (isset($_SESSION[self::USER_SESSION_SIGN])) ? $_SESSION[self::USER_SESSION_SIGN] : false;
     }
 
-
     /**
      * 获取当前登录用户信息
      *
@@ -82,6 +82,7 @@ class Public_model extends MY_Model
         return false;
     }
 
+
     /**
      * 获取单个用户
      *
@@ -93,6 +94,19 @@ class Public_model extends MY_Model
     public function getUser($tableName='',$select = '*', $where = [], $like = [])
     {
         return parent::get($this->db, $tableName, $select, $where, $like);
+    }
+    /**
+     * 通过签名获取请求信息
+     *
+     * @param string $username
+     * @param string $select
+     * @return bool|mixed
+     */
+    public function getValidRequestBySignature($tableName='',$signature = '', $select = '*')
+    {
+        return $this->getUser($tableName,$select, [
+            'signature' => trim($signature)
+        ]);
     }
 
     /**
@@ -107,6 +121,18 @@ class Public_model extends MY_Model
         return $this->getUser($tableName,$select, [
             'username' => trim($username)
         ]);
+    }
+
+    /**
+     * 通过用户ID获取用户信息
+     *
+     * @param int $userId
+     * @param string $select
+     * @return bool|mixed
+     */
+    public function getClientById($tableName='',$Id = 0, $select = '*')
+    {
+        return $this->getUser($tableName,$select, ['client_id' => (int)$Id]);
     }
 
     /**

@@ -15,7 +15,6 @@
                     <th>ID</th>
                     <th>Username</th>
                     <th>Password</th>
-                    <th>Head Portrait</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -25,8 +24,10 @@
                     <td><?php echo $v->id;?></td>
                     <td class="center"><?php echo $v->username;?></td>
                     <td class="center"><?php echo $v->password;?></td>
-                    <td class="center"><?php echo $v->head_portrait;?></td>
                     <td class="center">
+                        <a class="btn btn-success" href="<?php echo site_url('Client/goClient').'/'.$v->username.'/'.$v->id;?>">
+                            <i class=" icon-user "></i>
+                        </a>
                         <a class="btn btn-info" href="<?php echo site_url('Admin/create').'/'.$v->id;?>">
                             <i class="icon-edit "></i>
                         </a>

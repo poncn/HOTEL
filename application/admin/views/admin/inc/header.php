@@ -322,14 +322,15 @@
                     </li>
                     <!-- start: User Dropdown -->
                     <li class="dropdown">
+
                         <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
-                            <div class="avatar"><img src="<?php echo base_url('public/admin/img/avatar.jpg'); ?>"
-                                                     alt="Avatar"/></div>
+                            <div class="avatar"><img src="<?php echo base_url('public/admin/img/avatar.jpg'); ?>">
+                            </div>
                             <div class="user">
-                                <span class="hello">Welcome!</span>
-                                <span class="name">Łukasz Holeczek</span>
+                                <strong><span class="name"><?php echo $_SESSION['username']?></span></strong>
                             </div>
                         </a>
+
                         <ul class="dropdown-menu">
                             <li class="dropdown-menu-title">
 

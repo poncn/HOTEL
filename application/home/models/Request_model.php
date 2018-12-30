@@ -79,6 +79,7 @@ class Request_model extends MY_Model
         }
 
         $requestTime = $_SERVER['REQUEST_TIME'];
+
         if ($this->Public_model->addUser($this->requestTable,($requestArr = [
                 self::REQUEST_USERNAME_FIELD => $username,
                 self::REQUEST_TIME_FIELD => $requestTime,
@@ -87,7 +88,7 @@ class Request_model extends MY_Model
                 'request_client_id' => $client->client_id,
                 'request_state' => true
             ])) {
-            return $client->client_url. urlencode(http_build_query($requestArr));
+            return $client->client_url . urldecode(http_build_query($requestArr));
         }
         return false;
 
