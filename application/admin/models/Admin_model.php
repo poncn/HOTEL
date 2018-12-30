@@ -263,5 +263,4 @@ class Admin_model extends MY_Model
     {
         return $this->deleteUser(['id'=>(int)$Id]);
     }
-
 }

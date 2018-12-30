@@ -3,6 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Request_model extends MY_Model
 {
+    private $clientsTable='clients';
+    private $requestTable='request';
+
     //参数分隔符
     const PARAMS_DELIMITER = '&';
     //键值对分隔符
@@ -57,7 +60,7 @@ class Request_model extends MY_Model
      */
     public function createSignatureString($clientKey = '', $username = '', $requestTime = 0)
     {
-        return md5($clientKey, $username, $requestTime);
+        return md5($clientKey . $username . $requestTime);
     }
 
     /**
@@ -71,13 +74,13 @@ class Request_model extends MY_Model
     public function createRequest($username = '', $clientId = 0)
     {
         $this->load->model('Client_model');
-        if (!($client = $this->Client_model->getClientById($clientId))) {
+        if (!($client = $this->Public_model->getUserById($this->clientsTable,$clientId))) {
             return false;
         }
 
         $requestTime = $_SERVER['REQUEST_TIME'];
 
-        if ($this->addRequest(($requestArr = [
+        if ($this->Public_model->addUser($this->requestTable,($requestArr = [
                 self::REQUEST_USERNAME_FIELD => $username,
                 self::REQUEST_TIME_FIELD => $requestTime,
                 self::REQUEST_SIGNATURE_FIELD => $this->createSignatureString($client->client_key, $username, $requestTime),
@@ -111,7 +114,7 @@ class Request_model extends MY_Model
         $i = 0;
         $requestArr = [];
         foreach ($tmpArr as $v) {
-            if (-1 === strpos($v, self::KEY_VALuE_DELIMITER)) {
+            if (false === strpos($v, self::KEY_VALuE_DELIMITER)) {
                 //每个值都应该由键值对组成，此时在字符串内没有找到分隔符等号，直接结束校验
                 return false;
             }
@@ -155,7 +158,7 @@ class Request_model extends MY_Model
         }
 
         //获取源请求信息
-        if (!($sourceRequest = $this->getValidRequestBySignature($verifyString))) {
+        if (!($sourceRequest = $this->Public_model->getValidRequestBySignature($this->requestTable,$verifyArr[self::REQUEST_SIGNATURE_FIELD]))) {
             return [
                 'errorCode' => '9001',
                 'message' => self::ERROR_CODE['9001']
@@ -164,7 +167,7 @@ class Request_model extends MY_Model
 
         //通过原请求信息客户端ID获取客户端信息
         $this->load->model('Client_model');
-        if (!($client = $this->Client_model->getClientById($sourceRequest->request_client_id))) {
+        if (!($client = $this->Public_model->getClientById($this->clientsTable,$sourceRequest->request_client_id))) {
             return [
                 'errorCode' => '9002',
                 'message' => self::ERROR_CODE['9002']
@@ -188,7 +191,7 @@ class Request_model extends MY_Model
         }
 
         //设置当次请求已使用
-        if ($this->setRequest((array)$sourceRequest, [
+        if ($this->Public_model->setUser($this->requestTable,(array)$sourceRequest, [
             'request_state' => false
         ])) {
             return [
