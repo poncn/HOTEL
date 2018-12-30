@@ -369,7 +369,7 @@
 
                     <li>
                         <a class="dropmenu" href="#"><i class="icon-folder-close-alt"></i><span class="hidden-tablet"> Table Pages</span>
-                            <span class="label">6</span></a>
+                            <span class="label">8</span></a>
                         <ul>
                             <li>
                                 <a class="submenu" href="<?php echo site_url('Admin/table');?>">
@@ -407,11 +407,23 @@
                                     <span class="hidden-tablet"> Room table</span>
                                 </a>
                             </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Client/table');?>">
+                                    <i class="icon-table"></i>
+                                    <span class="hidden-tablet"> Client table</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Request/table');?>">
+                                    <i class="icon-table"></i>
+                                    <span class="hidden-tablet"> Request table</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a class="dropmenu" href="#"><i class="icon-folder-close-alt"></i><span class="hidden-tablet"> Create Pages</span>
-                            <span class="label">6</span></a>
+                            <span class="label">7</span></a>
                         <ul>
                             <li>
                                 <a class="submenu" href="<?php echo site_url('Admin/create');?>">
@@ -447,6 +459,12 @@
                                 <a class="submenu" href="<?php echo site_url('Room/create');?>">
                                     <i class="icon-edit"></i>
                                     <span class="hidden-tablet"> Room create</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="submenu" href="<?php echo site_url('Client/create');?>">
+                                    <i class="icon-edit"></i>
+                                    <span class="hidden-tablet"> Client create</span>
                                 </a>
                             </li>
                         </ul>

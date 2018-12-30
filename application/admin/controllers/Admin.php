@@ -28,9 +28,9 @@ class Admin extends MY_Controller
         ]);
     }
 
-    public function create($number = '')
+    public function create($id = '')
     {
-        if (!($data = $this->Public_model->getUserById($this->tableName,$number))) {
+        if (!($data = $this->Public_model->getUserById($this->tableName,$id))) {
             $this->loadView('admin/create/admin_create');
         } else {
             $this->loadView('admin/create/admin_create', [
