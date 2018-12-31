@@ -15,14 +15,17 @@
             <li><a href="">客房展示</a></li>
             <li><a href="">联系我们</a></li>
             <li><a href="">关于我们</a></li>
-            <li data-toggle="modal" data-target="#register">注册</li>
-            <li data-toggle="modal" data-target="#login">登录</li>
+            <?php if(isset($_SESSION['username'])&&isset($_SESSION['head_portrait'])):?>
             <li class="pic dropdown">
-                <img src="<?php echo base_url('public/home/img/rooms/room1.jpg');?>" alt="" width="45px" height="45px" class="dropdown-toggle" data-toggle="dropdown" >
+                <img src="<?php echo base_url($_SESSION['head_portrait']);?>" alt="" width="45px" height="45px" class="dropdown-toggle" data-toggle="dropdown" >
                 <div class="dropdown-menu user-menu">
-                    <a href="#" class="dropdown-item">退出登录</a>
+                    <a href="<?php echo site_url('Login/logout')?>" class="dropdown-item">退出登录</a>
                 </div>
             </li>
+            <?php else:?>
+            <li data-toggle="modal" data-target="#register">注册</li>
+            <li data-toggle="modal" data-target="#login">登录</li>
+            <?php endif;?>
         </ul>
     </div>
     <div class="bg-content">

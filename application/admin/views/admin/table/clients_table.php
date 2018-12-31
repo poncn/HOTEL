@@ -29,6 +29,9 @@
                         <td class="center"><?php echo $v->client_url;?></td>
                         <td class="center"><?php echo $v->client_state;?></td>
                         <td class="center">
+                            <a class="btn btn-success" href="<?php echo site_url('Client/goClient').'/'.$_SESSION['username'].'/'.$v->client_id;?>" target="_blank">
+                                <i class=" icon-user "></i>
+                            </a>
                             <a class="btn btn-info" href="<?php echo site_url('Client/create').'/'.$v->client_id;?>">
                                 <i class="icon-edit "></i>
                             </a>

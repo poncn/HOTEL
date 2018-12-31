@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Client extends My_Controller
 {
-
     private $tableName='clients';
 
     public function __construct()
@@ -43,7 +42,7 @@ class Client extends My_Controller
             array(
                 'field' => 'client_name',
                 'label' => 'client_name',
-                'rules' => 'required|regex_match[/[A-Za-z0-9]/]|is_unique[admin.username]|min_length[3]|max_length[9]',
+                'rules' => 'required|regex_match[/[A-Za-z0-9]/]|is_unique[clients.client_name]|min_length[3]|max_length[9]',
                 'errors' => array(
                     'required' => '用户名为必填项',
                     'regex_match' => '用户名必须是英文字母和数字',
@@ -173,7 +172,7 @@ class Client extends My_Controller
 
     }
 
-    public function goClient($username='',$clientId = 0)
+    public function goClient($username='',$clientId=0)
     {
         $this->load->Model('Request_model');
         if (false !== ($url = $this->Request_model->createRequest($username, (int)$clientId))) {

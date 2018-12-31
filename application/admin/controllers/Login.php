@@ -17,11 +17,13 @@ class Login extends MY_Controller
      */
     public function index()
     {
+
 //        $this->Public_model->setLogout();
+
         if (false !== $this->Public_model->getCurrentLogin()) {
+
             redirect(site_url('Admin/index'));
         }
-
         $this->load->view('admin/login');
 
     }

@@ -4,8 +4,8 @@
 
     <!-- start: Meta -->
     <meta charset="utf-8"/>
-    <title>博文酒家</title>
-    <meta name="description" content="博文酒家-是一个很好的酒店预定网站"/>
+    <title>王者吃鸡</title>
+    <meta name="description" content="王者吃鸡--是一个后台管理系统"/>
     <meta name="author" content="GP℃"/>
     <meta name="keyword" content="hotel"/>
     <!-- end: Meta -->
@@ -62,7 +62,7 @@
             </a>
             <a id="main-menu-toggle" class="hidden-phone open"><i class="icon-reorder"></i></a>
             <div class="row-fluid">
-                <a class="brand span2" href="#"><span>博文酒家</span></a>
+                <a class="brand span2" href="#"><span>王者吃鸡</span></a>
             </div>
             <!-- start: Header Menu -->
             <div class="nav-no-collapse header-nav">
@@ -324,7 +324,7 @@
                     <li class="dropdown">
 
                         <a class="btn account dropdown-toggle" data-toggle="dropdown" href="#">
-                            <div class="avatar"><img src="<?php echo base_url('public/admin/img/avatar.jpg'); ?>">
+                            <div class="avatar"><img src="<?php echo base_url($_SESSION['head_portrait']); ?>">
                             </div>
                             <div class="user">
                                 <strong><span class="name"><?php echo $_SESSION['username']?></span></strong>

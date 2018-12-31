@@ -25,7 +25,7 @@
                     <tr>
                         <td><?php echo $v->flow_id;?></td>
                         <td><?php echo $v->request_client_id;?></td>
-                        <td class="center"><?php echo $v->uaername;?></td>
+                        <td class="center"><?php echo $v->username;?></td>
                         <td class="center"><?php echo $v->request_time;?></td>
                         <td class="center"><?php echo $v->signature;?></td>
                         <td class="center"><?php echo $v->request_state;?></td>

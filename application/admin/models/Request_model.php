@@ -79,14 +79,14 @@ class Request_model extends MY_Model
         }
 
         $requestTime = $_SERVER['REQUEST_TIME'];
-        if ($this->Public_model->addUser($this->requestTable,($requestArr = [
+        if ($this->Public_model->addUser($this->requestTable,(($requestArr = [
                 self::REQUEST_USERNAME_FIELD => $username,
                 self::REQUEST_TIME_FIELD => $requestTime,
-                self::REQUEST_SIGNATURE_FIELD => $this->createSignatureString($client->client_key, $username, $requestTime),
+                self::REQUEST_SIGNATURE_FIELD => $this->createSignatureString($client->client_key, $username, $requestTime)
             ]) + [
                 'request_client_id' => $client->client_id,
                 'request_state' => true
-            ])) {
+            ]))) {
             return $client->client_url. urlencode(http_build_query($requestArr));
         }
         return false;

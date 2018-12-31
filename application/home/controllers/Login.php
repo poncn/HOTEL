@@ -3,12 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends MY_Controller
 {
+    private $tableName='admin';
     public function __construct()
     {
         parent::__construct();
-
+        $this->load->Model('Public_model');
         $this->load->Model('Request_model');
     }
+
 
     /**
      * 接收SSO登录推送
@@ -18,24 +20,19 @@ class Login extends MY_Controller
     public function ssoLogin($requestString = '')
     {
         $this->load->library('SSOClient');
-        $ret = $this->ssoclient->verify($requestString);
-        var_dump($ret);
-//        if (is_array(($ret = $this->ssoclient->verify($requestString))) && ('0000' === $ret['errorCode'])) {
-//            //设置目标用户登录逻辑
-//            if ($this->Public_model->getUserByUsername($ret['username'])) {
-//                $this->Public_model->setLogin($ret['username']);
-//                redirect(site_url());
-//            }
-//        }
-//        echo $ret['message'];
+        if (is_array(($ret = $this->ssoclient->verify($requestString))) && ('0000' === $ret['errorCode'])) {
+            //设置目标用户登录逻辑
+
+            if ($user=$this->Public_model->getUserByUsername($this->tableName,$ret['username'],['username','head_portrait'])) {
+                $this->Public_model->setLogin($user);
+                redirect(site_url('Home/index'));
+            }
+        }
+        echo $ret['message'];
     }
 
-    public function index($requestString = 'username=username&request_time=59&signature=1ebfe4db6f9b6798e5d4a4edcf57abd1')
-    {
-        $this->load->library('SSOClient');
-        $result = $this->ssoclient->verify($requestString);
-        var_dump($result);
-//        $this->ssoLogin($txt);
+    public function logout(){
+        $this->Public_model->setLogout();
+        redirect('Home/index');
     }
-
 }

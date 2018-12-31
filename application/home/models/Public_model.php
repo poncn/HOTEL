@@ -28,11 +28,11 @@ class Public_model extends MY_Model
      */
     public function verifyLogin($tableName='',$username = '', $password = '')
     {
-        if (($user = $this->getUser($tableName,'username', [
+        if (($user = $this->getUser($tableName,['username','head_portrait'], [
             'username' => $username,
             'password' => $this->createHashedPassword($username, $password)
         ]))) {
-            return $this->setLogin($user->username);
+            return $this->setLogin($user);
         }
         return false;
     }
@@ -43,9 +43,10 @@ class Public_model extends MY_Model
      * @param string $username
      * @return bool
      */
-    public function setLogin($username = '')
+    public function setLogin($user='')
     {
-        $_SESSION[self::USER_SESSION_SIGN] = $username;
+        $_SESSION[self::USER_SESSION_SIGN] = $user->username;
+        $_SESSION['head_portrait']=$user->head_portrait;
         return true;
     }
 
@@ -56,6 +57,7 @@ class Public_model extends MY_Model
     public function setLogout()
     {
         unset($_SESSION[self::USER_SESSION_SIGN]);
+        unset($_SESSION['head_portrait']);
         return true;
     }
 

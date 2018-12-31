@@ -57,9 +57,9 @@
 
                     <label for="username" class="fa fa-user-o"></label>
                     <input class="form-control-lg" type="text" placeholder="用户名" name="username"><br>
-<!--                    <label for="password" class="fa fa-key"></label>-->
-<!--                    <input class="form-control-lg" type="password" placeholder="密码"><br>-->
-<!--                </div>-->
+                    <label for="password" class="fa fa-key"></label>
+                    <input class="form-control-lg" type="password" placeholder="密码"><br>
+                </div>
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-secondary">登录</button>
