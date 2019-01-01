@@ -58,20 +58,23 @@
         <div class="box-one">
             <h3><strong>观览客房</strong></h3>
             <ul class="rooms">
+                <?php foreach ($intro as $v):if($v->state==0):?>
                 <li>
-                    <img src="<?php echo base_url('public/home/img/rooms/room1.jpg');?>" alt="" width="300px" height="200px">
+                    <a href="<?php echo site_url('Room/index').'/'.$v->id;?>">
+                        <img src="<?php echo base_url($v->pic_1);?>" alt="" width="300px" height="200px">
+                    </a>
                     <div>
-                        <span>每晚￥200</span>
+                        <span>每晚￥<?php echo $v->unit_price;?></span>
                         <span>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-half-full"></i>
-                            <i class="fa fa-star-o"></i>
+                            <?php printText($v->grade)?>
                         </span>
                     </div>
-                    <p>深海船木风格-1室1床1卫</p>
+                    <p>
+                        <span><?php echo $v->introduce;?></span>
+                        <span><?php echo $v->type;?></span>
+                    </p>
                 </li>
+                <?php endif; endforeach;?>
             </ul>
         </div>
     </div>

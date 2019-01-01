@@ -15,7 +15,7 @@
 <div class="modal fade" id="register">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="" method="post" class="register-form">
+            <form onsubmit="return false;" method="post" class="register-form">
                 <!-- 模态框头部 -->
                 <div class="modal-header">
                     <h4 class="modal-title">用户注册</h4>
@@ -26,17 +26,17 @@
                 <div class="modal-body">
 
                     <label for="username" class="fa fa-user-o"></label>
-                    <input class="form-control-lg" type="text" placeholder="用户名"><br>
+                    <input class="form-control-lg" id="username" name="username" type="text" placeholder="用户名"><br>
                     <label for="password" class="fa fa-key"></label>
-                    <input class="form-control-lg" type="password" placeholder="密码"><br>
-                    <label for="password" class="fa fa-key"></label>
-                    <input class="form-control-lg" type="password" placeholder="重复密码"><br>
+                    <input class="form-control-lg" id="password" name="password" type="password" placeholder="密码"><br>
+                    <label for="rePassword" class="fa fa-key"></label>
+                    <input class="form-control-lg" id="rePassword" name="rePassword" type="password" placeholder="重复密码"><br>
 
                 </div>
 
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary" data-dismiss="modal">注册新用户</button>
+                    <button type="submit" class="btn btn-secondary" data-dismiss="modal" onclick="register()">注册新用户</button>
                 </div>
             </form>
         </div>
@@ -45,7 +45,7 @@
 <div class="modal fade" id="login">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="<?php echo site_url('Login/doLogin')?>" method="post" class="register-form">
+            <form method="post" class="register-form" onsubmit="return false;">
                 <!-- 模态框头部 -->
                 <div class="modal-header">
                     <h4 class="modal-title">用户登录</h4>
@@ -55,14 +55,14 @@
                 <!-- 模态框主体 -->
                 <div class="modal-body login-body">
 
-                    <label for="username" class="fa fa-user-o"></label>
-                    <input class="form-control-lg" type="text" placeholder="用户名" name="username"><br>
-                    <label for="password" class="fa fa-key"></label>
-                    <input class="form-control-lg" type="password" placeholder="密码"><br>
+                    <label for="login-username" class="fa fa-user-o"></label>
+                    <input class="form-control-lg" type="text" placeholder="用户名" id="login-username" name="login-username"><br>
+                    <label for="login-password" class="fa fa-key"></label>
+                    <input class="form-control-lg" name="login-password" id="login-password" type="password" placeholder="密码"><br>
                 </div>
                 <!-- 模态框底部 -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-secondary">登录</button>
+                    <button type="submit" class="btn btn-secondary" onclick="login()">登录</button>
                 </div>
             </form>
         </div>
@@ -77,6 +77,56 @@
 <script src="<?php echo base_url('public/home/js/comment.js'); ?>"></script>
 <script type="text/javascript">
     $('.input-daterange').datepicker({language: "zh-CN"})
+</script>
+<script type="text/javascript">
+    function register() {
+        var username = $("#username");
+        var password = $("#password");
+        var rePassword = $("#rePassword");
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Login/register')?>",
+            data: {
+                'username': username.val(),
+                'password': password.val(),
+                'rePassword': rePassword.val()
+            },
+            dataType: "JSON"
+        }).done(function (data) {
+
+        }).always(function (data) {
+            if (data) {
+                alert(data);
+            }
+        })
+    }
+    function login() {
+        var loginPsername = $("#login-username");
+        var loginPassword = $("#login-password");
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Login/doLogin')?>",
+            data: {
+                'username': loginPsername.val(),
+                'password': loginPassword.val()
+            },
+            async: false,
+            dataType: "JSON"
+        }).done(function (data) {
+            if (0 === data['errorCode']) {
+
+            }
+        }).always(function (data) {
+            if (data['message'] && (data['message'].length > 0)) {
+                alert(data['message']);
+            }
+            if (data['redirectUrl'] && (data['redirectUrl'].length > 0)) {
+                self.location.href = data['redirectUrl'];
+            }
+        })
+    }
 </script>
 </body>
 </html>

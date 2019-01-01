@@ -24,4 +24,9 @@ class MY_Controller extends CI_Controller
         }
 
     }
+
+    public function jsonOut($data){
+        return $this->output->set_output(json_encode($data));
+    }
+
 }

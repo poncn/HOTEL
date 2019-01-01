@@ -1,3 +1,4 @@
+
 <div class="row header-room">
     <div class="nav">
         <div class="col-7 nav-left">
@@ -15,31 +16,33 @@
             <li><a href="#">客房展示</a></li>
             <li><a href="">联系我们</a></li>
             <li><a href="">关于我们</a></li>
-            <li data-toggle="modal" data-target="#register">注册</li>
-            <li data-toggle="modal" data-target="#login">登录</li>
-            <li class="pic dropdown">
-                <img src="<?php echo base_url('public/home/img/rooms/room1.jpg'); ?>" alt="" width="45px" height="45px" class="dropdown-toggle" data-toggle="dropdown">
-                <div class="dropdown-menu user-menu">
-                    <a href="#" class="dropdown-item">退出登录</a>
-                </div>
-            </li>
+            <?php if(isset($_SESSION['username'])&&isset($_SESSION['head_portrait'])):?>
+                <li class="pic dropdown">
+                    <img src="<?php echo base_url($_SESSION['head_portrait']);?>" alt="" width="45px" height="45px" class="dropdown-toggle" data-toggle="dropdown" >
+                    <div class="dropdown-menu user-menu">
+                        <a href="<?php echo site_url('Login/logout')?>" class="dropdown-item">退出登录</a>
+                    </div>
+                </li>
+            <?php else:?>
+                <li data-toggle="modal" data-target="#register">注册</li>
+                <li data-toggle="modal" data-target="#login">登录</li>
+            <?php endif;?>
         </ul>
     </div>
     <div class="bg-img">
         <div class="imgs">
-            <img src="<?php echo base_url('public/home/img/rooms/room1.jpg'); ?>" alt="" width="440px"
+            <img src="<?php echo base_url($v->pic_1); ?>" alt="" width="440px"
                  height="300px">
-            <img src="<?php echo base_url('public/home/img/rooms/room1.jpg'); ?>" alt="" width="440px"
+            <img src="<?php echo base_url($v->pic_2); ?>" alt="" width="440px"
                  height="300px">
-            <img src="<?php echo base_url('public/home/img/rooms/room1.jpg'); ?>" alt="" width="440px"
+            <img src="<?php echo base_url($v->pic_3); ?>" alt="" width="440px"
                  height="300px">
-            <img src="<?php echo base_url('public/home/img/rooms/room1.jpg'); ?>" alt="" width="440px"
+            <img src="<?php echo base_url($v->pic_4); ?>" alt="" width="440px"
                  height="300px">
-            <img src="<?php echo base_url('public/home/img/rooms/room1.jpg'); ?>" alt="" width="440px"
+            <img src="<?php echo base_url($v->pic_5); ?>" alt="" width="440px"
                  height="300px">
         </div>
     </div>
-
 </div>
 <div class="row content">
     <div class="list">
@@ -57,12 +60,12 @@
     <div class="details">
         <div class="col-1"></div>
         <div class="col-6 details-left">
-            <h2><strong>无敌海景家庭房</strong></h2>
+            <h2><strong><?php echo $v->introduce;?></strong></h2>
             <p>
-                <span><i class="fa fa-home"></i> 1间卧室</span>&nbsp;&nbsp;
-                <span><i class="fa fa-bed"></i> 2张床</span>&nbsp;&nbsp;
-                <span><i class="fa fa-bath"></i> 1间卫生间</span>&nbsp;&nbsp;
-                <span><i class="fa fa-users"></i> 最多住4人</span>&nbsp;&nbsp;
+                <span><i class="fa fa-home"></i> <?php echo $v->bedroom;?>间卧室</span>&nbsp;&nbsp;
+                <span><i class="fa fa-bed"></i> <?php echo $v->bed;?>张床</span>&nbsp;&nbsp;
+                <span><i class="fa fa-bath"></i> <?php echo $v->toilet;?>间卫生间</span>&nbsp;&nbsp;
+                <span><i class="fa fa-users"></i> 最多住<?php echo $v->num_people;?>人</span>&nbsp;&nbsp;
             </p>
 
             <div class="comment">
@@ -166,7 +169,7 @@
         <div class="col-4 details-right">
             <ul class="pay">
                 <li class="pay-header">
-                    <h4><i class="fa fa-rmb"></i>367</h4><span>每晚</span>
+                    <h4><i class="fa fa-rmb"></i><?php echo $v->unit_price?></h4><span>每晚</span>
                 </li>
                 <li class="pay-content">
                     <form action="" method="post">

@@ -289,7 +289,9 @@
 .content .box .box-one .rooms li p{
     font: 0.8em Arial, sans-serif;
     height: 30px;
-    padding: 0 0 0 10px;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .footer{
